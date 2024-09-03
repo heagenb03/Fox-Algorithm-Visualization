@@ -1,0 +1,5 @@
+#Matrix size intialization:
+MATRIX_ROW_CT = 3
+MATRIX_COL_CT = 3
+
+MATRIX_SIZE = MATRIX_ROW_CT * MATRIX_COL_CT
