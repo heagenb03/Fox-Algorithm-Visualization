@@ -26,9 +26,11 @@ def createBlankMatrixEntries():
 #Intailizes a "box" with one entry
 def createMatrixEntry(num, txt_color):
     result = VGroup()
+    box = createMatrixBox()
+    
     entry = Text(str(num), font_size=MATRIX_FONT_SIZE, color=txt_color)
     
-    result.add(createMatrixBox(), entry)
+    result.add(box, entry)
     
     return result
 
