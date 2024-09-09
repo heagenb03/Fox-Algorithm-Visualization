@@ -1,4 +1,4 @@
-from manim import VGroup, Rectangle, Scene, Text, FadeIn, FadeOut, MathTex, np, RED_E, WHITE, RIGHT, ORIGIN, UL, UR, DOWN, LEFT
+from manim import VGroup, Rectangle, Scene, Text, RED_E, WHITE, YELLOW, RIGHT, ORIGIN, FadeIn
 from constants import *
 
 
@@ -78,42 +78,31 @@ def createMatrixBScene1():
 def createMatrixCScene1():
     matrix = VGroup()
     box_list = []
-    
-    for i in range(MATRIX_COL_CT*MATRIX_ROW_CT):
+    for i in range(MATRIX_SIZE):
         box_list.append(createBlankMatrixEntries())
     matrix.add(*box_list)
     
-    matrix.arrange_in_grid(rows=MATRIX_ROW_CT, cols=MATRIX_COL_CT, buff=MATRIX_BUFFER)
+    matrix.arrange_in_grid(rows=MATRIX_ROW_CT, cols=MATRIX_COL_CT, buff=0.25)
     return matrix
 
-#Scene 2
-
-#Create Matrix C with numbers from Matrix A & C
-def createMatrixCScene2():
+#Creates a Matrix with "boxes" with enteries
+def createMatrix(textColor):
     matrix = VGroup()
     box_list = []
-    
-    for i in range(MATRIX_COL_CT*MATRIX_ROW_CT):
-        box_list.append(createTwoMatrixEntries(MATRIX_A_NUMBERS[i], MATRIX_B_NUMBERS[i], MATRIX_A_COLOR, MATRIX_B_COLOR))
-        
+    for i in range(MATRIX_SIZE):
+        box_list.append(createMatrixEntries(i, textColor))
     matrix.add(*box_list)
     matrix.arrange_in_grid(rows=MATRIX_ROW_CT, cols=MATRIX_COL_CT, buff=MATRIX_BUFFER)
     
+    matrix.arrange_in_grid(rows=MATRIX_ROW_CT, cols=MATRIX_COL_CT, buff=0.25)
     return matrix
-    
-    
+
+
 class Fox(Scene):
     def construct(self):
-        #Scene 1 - Fade in matrices + signs & fade out matrixA, B, & signs
-        
-        #Intialize Matrices
-        matrixA_scene1 = createMatrixAScene1()
-        matrixB_scene1 = createMatrixBScene1()
-        matrixC_scene1 = createMatrixCScene1()
-        
-        #Intialize Signs
-        multi_sign = MathTex("\\times")
-        equal_sign = MathTex("=")
+        matrixA = createMatrix(WHITE)
+        matrixB = createMatrix(YELLOW)
+        matrixC = createBlankMatrix()
         
         matrices = VGroup(
             matrixA_scene1,
@@ -148,9 +137,10 @@ class Fox(Scene):
         #Scene 2
         matrixC_scene2 = createMatrixCScene2()
         
+        self.play(FadeIn(matrices))
+        self.wait(2)
         self.play(
-            FadeOut(matrices),
-            FadeIn(matrixC_scene2.shift(RIGHT * 4.27))
+            FadeIn(matrices)
         )
         
         self.wait(1)
