@@ -1,2 +1,7 @@
 # This file is used internally by FFMPEG.
-file 'file:C:/Users/heage/Documents/Python/Visualizing Algrothims/Fox-Algorithm/Fox-Algorithm-Visualization/media/videos/scene/480p15/partial_movie_files/Fox/1185818338_3159247908_223132457.mp4'
+file 'file:C:/Users/heage/Documents/Coding Projects/Python/Visualizing Algrothims/Fox-Algorithm/Fox-Algorithm-Visualization/media/videos/scene/480p15/partial_movie_files/Fox/1185818338_2082850900_223132457.mp4'
+file 'file:C:/Users/heage/Documents/Coding Projects/Python/Visualizing Algrothims/Fox-Algorithm/Fox-Algorithm-Visualization/media/videos/scene/480p15/partial_movie_files/Fox/624642324_3890345977_3457029844.mp4'
+file 'file:C:/Users/heage/Documents/Coding Projects/Python/Visualizing Algrothims/Fox-Algorithm/Fox-Algorithm-Visualization/media/videos/scene/480p15/partial_movie_files/Fox/624642324_1086256540_997447090.mp4'
+file 'file:C:/Users/heage/Documents/Coding Projects/Python/Visualizing Algrothims/Fox-Algorithm/Fox-Algorithm-Visualization/media/videos/scene/480p15/partial_movie_files/Fox/624642324_3890345977_2186948244.mp4'
+file 'file:C:/Users/heage/Documents/Coding Projects/Python/Visualizing Algrothims/Fox-Algorithm/Fox-Algorithm-Visualization/media/videos/scene/480p15/partial_movie_files/Fox/624642324_2365035203_2140053214.mp4'
+file 'file:C:/Users/heage/Documents/Coding Projects/Python/Visualizing Algrothims/Fox-Algorithm/Fox-Algorithm-Visualization/media/videos/scene/480p15/partial_movie_files/Fox/624642324_3890345977_3773297621.mp4'
