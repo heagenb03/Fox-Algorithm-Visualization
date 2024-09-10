@@ -1,8 +1,7 @@
 from manim import WHITE, YELLOW
 
 #Matrix default intialization:
-MATRIX_ROW_CT = 3
-MATRIX_COL_CT = 3
+MATRIX_ROW_COL_CT = 3
 MATRIX_BUFFER = 0.25
 MATRIX_FONT_SIZE = 24
 
