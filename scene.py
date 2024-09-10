@@ -1,4 +1,4 @@
-from manim import VGroup, Rectangle, Scene, Text, FadeIn, FadeOut, MathTex, np, RED_E, WHITE, RIGHT, ORIGIN, UL, UR, DOWN, LEFT
+from manim import VGroup, Rectangle, Scene, Text, FadeIn, FadeOut, MathTex, np, RED_E, WHITE, RIGHT, ORIGIN, UL, UR, DOWN, LEFT, UP
 from constants import *
 
 
@@ -10,7 +10,7 @@ def createMatrixBox():
             height=1,
             width=1,
             fill_color=RED_E,
-            fill_opacity=0.8,
+            fill_opacity=0.7,
             stroke_color=WHITE
         )
     
@@ -28,7 +28,7 @@ def createMatrixEntry(num, txt_color):
     result = VGroup()
     box = createMatrixBox()
     
-    entry = Text(str(num), font_size=MATRIX_FONT_SIZE, color=txt_color)
+    entry = Text(str(num), font_size=MATRIX_FONT_SIZE, color=txt_color, fill_opacity=0.9)
     
     result.add(box, entry)
     
@@ -39,8 +39,8 @@ def createTwoMatrixEntries(first_num, second_num, first_txt_color, second_txt_co
     result = VGroup()
     box = createMatrixBox()
     
-    first_entry = Text(str(first_num), font_size=MATRIX_FONT_SIZE, color=first_txt_color)
-    second_entry = Text(str(second_num), font_size=MATRIX_FONT_SIZE, color=second_txt_color)
+    first_entry = Text(str(first_num), font_size=MATRIX_FONT_SIZE, color=first_txt_color, fill_opacity=0.9)
+    second_entry = Text(str(second_num), font_size=MATRIX_FONT_SIZE, color=second_txt_color, fill_opacity=0.9)
     first_entry.align_to(box, UL).shift(DOWN * 0.1 + RIGHT * 0.1)
     second_entry.align_to(box, UR).shift(DOWN * 0.1 + LEFT * 0.1)
     
@@ -103,7 +103,6 @@ def createMatrixCScene2():
     
     return matrix
     
-    
 class Fox(Scene):
     def construct(self):
         #Scene 1 - Fade in matrices + signs & fade out matrixA, B, & signs
@@ -132,27 +131,38 @@ class Fox(Scene):
         
         animations = []
         for i in range(MATRIX_ROW_CT*MATRIX_COL_CT):
-            numberes = matrixA_scene1[i][1]
+            numbers = matrixA_scene1[i][1]
             box_center = matrixC_scene1[i].get_center()
             offset = np.array([-0.32, 0.28, 0])
             target_position = box_center + offset
-            animations.append(numberes.animate.move_to(target_position)) 
+            animations.append(numbers.animate.move_to(target_position)) 
             
-            numberes = matrixB_scene1[i][1]
+            numbers = matrixB_scene1[i][1]
             box_center = matrixC_scene1[i].get_center()
             offset = np.array([0.32, 0.28, 0])
             target_position = box_center + offset
-            animations.append(numberes.animate.move_to(target_position)) 
+            animations.append(numbers.animate.move_to(target_position)) 
             
+        
         self.play(*animations)
         self.wait(1)
         
         #Scene 2
         matrixC_scene2 = createMatrixCScene2()
+        self.add(matrixC_scene2)
+        animations = []
+
+        for i in range((MATRIX_ROW_CT * MATRIX_COL_CT)):
+            for x in range(3):
+                numbers = matrixC_scene2[i][x]
+                box_center = matrixB_scene1[i].get_center()
+                offset = np.array([0.32, 0.28, 0])
+                target_position = box_center + offset + ORIGIN
+                animations.append(numbers.animate.move_to(target_position))
         
         self.play(
             FadeOut(matrices),
-            FadeIn(matrixC_scene2.shift(RIGHT * 4.27))
+            FadeIn(matrixC_scene2.shift(RIGHT * 4.27)),
+            *animations
         )
-        
         self.wait(1)
