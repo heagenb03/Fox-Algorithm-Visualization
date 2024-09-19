@@ -1,4 +1,4 @@
-from manim import ArcBetweenPoints, MoveAlongPath, VGroup, Rectangle, Scene, Text, FadeIn, FadeOut, MathTex, np, PI, RED_E, WHITE, RIGHT, ORIGIN, UL, UR, DOWN, LEFT, UP
+from manim import ArcBetweenPoints, MoveAlongPath, VGroup, Rectangle, Scene, Text, FadeIn, FadeOut, MathTex, np, tempconfig, PI, RED_E, WHITE, RIGHT, ORIGIN, UL, UR, DOWN, LEFT, UP
 from constants import *
 
 
@@ -50,6 +50,10 @@ def createTwoMatrixEntries(first_num, second_num, first_txt_color, second_txt_co
     result.add(box, first_entry, second_entry)
     
     return result
+    
+def findPathForEntries(col_ct, row_ct):
+    target_pt = row_ct + ((row_ct * (MATRIX_ROW_COL_CT - (1 * col_ct))) - 1)
+    if target_pt 
     
 #Scene 1
 
@@ -198,28 +202,36 @@ class Fox(Scene):
     
         #Copy Matrix C Values
         matrixC_copy = []
-        for i in range(MATRIX_ROW_COL_CT**2):
-            matrixC_copy.append(matrixC_scene2[i][1].copy())
-            self.add(matrixC_copy[i])
+        for n in range(MATRIX_ROW_COL_CT - 1):
+            for i in range(MATRIX_ROW_COL_CT**2):
+                matrixC_copy.append(matrixC_scene2[i][1].copy())
+                self.add(matrixC_copy[i])
     
         #Set Animations for Matrix Entreries (1) to move 
         animations = []
-        
-        while i < MATRIX_ROW_COL_CT:
+        for i in range(MATRIX_ROW_COL_CT):
+            #First Row
             if i == 0:
                 for n in range(MATRIX_ROW_COL_CT - 1):
-                    arcPath = ArcBetweenPoints(matrixC_copy[n].get_center(), matrixC_copy[n + 1].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
-                    animations.append(MoveAlongPath(matrixC_copy[n], arcPath))
-                    
+                    print("A")
+                    arcPath = ArcBetweenPoints(matrixC_copy[i + (n * (MATRIX_ROW_COL_CT**2))].get_center(), matrixC_copy[i + (n + 1)].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
+                    animations.append(MoveAlongPath(matrixC_copy[i + (n * (MATRIX_ROW_COL_CT**2))], arcPath))
+              
+            #Last Row
             elif i == MATRIX_ROW_COL_CT - 1:
-                print("X")
-                for n in range(MATRIX_ROW_COL_CT - 1, -1):
+                pass 
+                '''
+                for n in range(MATRIX_ROW_COL_CT - 1, -1, -1):
+    
                     arcPath = ArcBetweenPoints(matrixC_copy[n].get_center(), matrixC_copy[n - 1].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
                     animations.append(MoveAlongPath(matrixC_copy[n], arcPath))
+                '''
+                 
             else:
-                arcPath = ArcBetweenPoints(matrixC_copy[i + MATRIX_ROW_COL_CT].get_center(), matrixC_copy[i + MATRIX_ROW_COL_CT - 1].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
-            
-            i += 1
+                for n in range(MATRIX_ROW_COL_CT - 1):
+                    print("B")
+                    arcPath = ArcBetweenPoints(matrixC_copy[(i + MATRIX_ROW_COL_CT) + (n * (MATRIX_ROW_COL_CT**2))].get_center(), matrixC_copy[i + ((i * (MATRIX_ROW_COL_CT - (1 * n))) - 1)].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
+                    animations.append(MoveAlongPath(matrixC_copy[(i + MATRIX_ROW_COL_CT) + (n * (MATRIX_ROW_COL_CT**2))], arcPath))
                     
         '''
         arcPath = ArcBetweenPoints(matrixC_copy[0].get_center(), matrixC_copy[1].get_center(), angle=PI/2)
@@ -234,6 +246,8 @@ class Fox(Scene):
         ]
         '''
         
+        print(animations)
+        
         self.play(*animations, runtime = 5)
         self.wait(1)
         
@@ -247,3 +261,7 @@ class Fox(Scene):
         
         self.play(*animations, runtime = 1)
         '''
+        
+with tempconfig({"quality": "medium_quality", "disable_caching": True}):
+    scene = Fox()
+    scene.render()
