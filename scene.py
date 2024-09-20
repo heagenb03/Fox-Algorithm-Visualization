@@ -51,10 +51,6 @@ def createTwoMatrixEntries(first_num, second_num, first_txt_color, second_txt_co
     
     return result
     
-def findPathForEntries(col_ct, row_ct):
-    target_pt = row_ct + ((row_ct * (MATRIX_ROW_COL_CT - (1 * col_ct))) - 1)
-    if target_pt 
-    
 #Scene 1
 
 #Creates Matrix A with "boxes" with enteries
@@ -213,7 +209,6 @@ class Fox(Scene):
             #First Row
             if i == 0:
                 for n in range(MATRIX_ROW_COL_CT - 1):
-                    print("A")
                     arcPath = ArcBetweenPoints(matrixC_copy[i + (n * (MATRIX_ROW_COL_CT**2))].get_center(), matrixC_copy[i + (n + 1)].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
                     animations.append(MoveAlongPath(matrixC_copy[i + (n * (MATRIX_ROW_COL_CT**2))], arcPath))
               
@@ -228,39 +223,21 @@ class Fox(Scene):
                 '''
                  
             else:
-                for n in range(MATRIX_ROW_COL_CT - 1):
-                    print("B")
-                    arcPath = ArcBetweenPoints(matrixC_copy[(i + MATRIX_ROW_COL_CT) + (n * (MATRIX_ROW_COL_CT**2))].get_center(), matrixC_copy[i + ((i * (MATRIX_ROW_COL_CT - (1 * n))) - 1)].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
-                    animations.append(MoveAlongPath(matrixC_copy[(i + MATRIX_ROW_COL_CT) + (n * (MATRIX_ROW_COL_CT**2))], arcPath))
+                for n in range(i):
+                    if n == 0:
+                        arcPath = ArcBetweenPoints(matrixC_copy[(i + (i*MATRIX_ROW_COL_CT)) + (n * (MATRIX_ROW_COL_CT**2))].get_center(), matrixC_copy[i + (i * (MATRIX_ROW_COL_CT - n)) - 1].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
+                    else:
+                        arcPath = ArcBetweenPoints(matrixC_copy[(i + (i*MATRIX_ROW_COL_CT)) + (n * (MATRIX_ROW_COL_CT**2))].get_center(), matrixC_copy[i + (i * (MATRIX_ROW_COL_CT - n))].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
                     
-        '''
-        arcPath = ArcBetweenPoints(matrixC_copy[0].get_center(), matrixC_copy[1].get_center(), angle=PI/2)
-        animations = [
-            MoveAlongPath(matrixC_copy[0], arcPath),
-            matrixC_scene2[0][1].animate.move_to(matrixC_scene2[1][1]),
-            matrixC_scene2[0][1].animate.move_to(matrixC_scene2[2][1]),
-            matrixC_scene2[4][1].animate.move_to(matrixC_scene2[3][1]),
-            matrixC_scene2[4][1].animate.move_to(matrixC_scene2[5][1]),
-            matrixC_scene2[8][1].animate.move_to(matrixC_scene2[6][1]),
-            matrixC_scene2[8][1].animate.move_to(matrixC_scene2[7][1])
-        ]
-        '''
-        
-        print(animations)
-        
+                    animations.append(MoveAlongPath(matrixC_copy[(i + (i*MATRIX_ROW_COL_CT)) + (n * (MATRIX_ROW_COL_CT**2))], arcPath))
+                
+                for z in range(MATRIX_ROW_COL_CT - (i + 1)):
+                    arcPath = ArcBetweenPoints(matrixC_copy[(i + (i*MATRIX_ROW_COL_CT)) + ((z + n + 1) * (MATRIX_ROW_COL_CT**2))].get_center(), matrixC_copy[i + (i * (MATRIX_ROW_COL_CT + z)) + 1].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
+                    animations.append(MoveAlongPath(matrixC_copy[(i + (i*MATRIX_ROW_COL_CT)) + ((z + n + 1) * (MATRIX_ROW_COL_CT**2))], arcPath))
+
+        #print(animations)
         self.play(*animations, runtime = 5)
         self.wait(1)
-        
-        '''
-        arcPath = ArcBetweenPoints(matrixC_scene2[3][1].get_center(), matrixC_scene2[5][1].get_center(), angle=PI/2)
-        animations = [
-            MoveAlongPath(matrixC_scene2[3][1], arcPath),
-            matrixC_scene2[4][1].animate.move_to(matrixC_scene2[3][1]),
-            matrixC_scene2[5][1].animate.move_to(matrixC_scene2[4][1]),
-        ]
-        
-        self.play(*animations, runtime = 1)
-        '''
         
 with tempconfig({"quality": "medium_quality", "disable_caching": True}):
     scene = Fox()
