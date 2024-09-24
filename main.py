@@ -1,119 +1,12 @@
-from manim import ArcBetweenPoints, MoveAlongPath, VGroup, Rectangle, Scene, Text, FadeIn, FadeOut, MathTex, np, tempconfig, PI, RED_E, WHITE, RIGHT, ORIGIN, UL, UR, DOWN, LEFT, UP
+from manim import ArcBetweenPoints, MoveAlongPath, VGroup,Scene, FadeIn, FadeOut, MathTex, np, PI, RIGHT, ORIGIN, LEFT
+import sys
+sys.path.insert(0, 'scenes')
+
 from constants import *
+from scenes.intial import *
+from scenes.scene1 import *
+from scenes.scene2 import *
 
-
-#Intialize Basic Callback Functions
-
-#Creates the individual "box" within a matrix
-def createMatrixBox():
-    matrixBox = Rectangle(
-            height=1,
-            width=1,
-            fill_color=RED_E,
-            fill_opacity=0.7,
-            stroke_color=WHITE
-        )
-    
-    return matrixBox
-
-#Intializes the "box" as empty
-def createBlankMatrixEntries():
-    result = VGroup() 
-    result.add(createMatrixBox())
-    
-    return result
-
-#Intailizes a "box" with one entry
-def createMatrixEntry(num, txt_color):
-    result = VGroup()
-    box = createMatrixBox()
-    
-    entry = Text(str(num), font_size=MATRIX_FONT_SIZE, color=txt_color, fill_opacity=0.9)
-    
-    result.add(box, entry)
-    
-    return result
-
-#Intailize a "box" with two enteries
-def createTwoMatrixEntries(first_num, second_num, first_txt_color, second_txt_color):
-    DOWN_ALINGMENT = 0.1
-    SIDE_ALINGMENT = 0.1
-    
-    result = VGroup()
-    box = createMatrixBox()
-    
-    first_entry = Text(str(first_num), font_size=MATRIX_FONT_SIZE, color=first_txt_color, fill_opacity=0.9)
-    second_entry = Text(str(second_num), font_size=MATRIX_FONT_SIZE, color=second_txt_color, fill_opacity=0.9)
-    first_entry.align_to(box, UL).shift(DOWN * DOWN_ALINGMENT + RIGHT * SIDE_ALINGMENT)
-    second_entry.align_to(box, UR).shift(DOWN * DOWN_ALINGMENT + LEFT * SIDE_ALINGMENT)
-    
-    result.add(box, first_entry, second_entry)
-    
-    return result
-
-#Creates a copy of the entries in the matrix to be used for animations
-def createMatrixCopy(matrix):
-    matrix_copy = []
-    for column in range(MATRIX_ROW_COL_CT - 1):
-        for box in range(MATRIX_ROW_COL_CT**2):
-            matrix_copy.append(matrix[box][1].copy())
-            
-    return matrix_copy
-
-#Scene 1
-
-#Creates Matrix A with "boxes" with enteries
-def createMatrixAScene1():
-    matrix = VGroup()
-    box_list = []
-    
-    for entry in range(MATRIX_ROW_COL_CT**2):
-        box_list.append(createMatrixEntry(MATRIX_A_NUMBERS[entry], MATRIX_A_COLOR))
-    
-    matrix.add(*box_list)
-    matrix.arrange_in_grid(rows=MATRIX_ROW_COL_CT, cols=MATRIX_ROW_COL_CT, buff=MATRIX_BUFFER)
-    
-    return matrix
-
-#Creates Matrix B with "boxes" with enteries
-def createMatrixBScene1():
-    matrix = VGroup()
-    box_list = []
-    
-    for entry in range(MATRIX_ROW_COL_CT**2):
-        box_list.append(createMatrixEntry(MATRIX_B_NUMBERS[entry], MATRIX_B_COLOR))
-        
-    matrix.add(*box_list)
-    matrix.arrange_in_grid(rows=MATRIX_ROW_COL_CT, cols=MATRIX_ROW_COL_CT, buff=MATRIX_BUFFER)
-    
-    return matrix
-
-#Creates a Matrix C with blank "boxes"
-def createMatrixCScene1():
-    matrix = VGroup()
-    box_list = []
-    
-    for box in range(MATRIX_ROW_COL_CT**2):
-        box_list.append(createBlankMatrixEntries())
-    matrix.add(*box_list)
-    
-    matrix.arrange_in_grid(rows=MATRIX_ROW_COL_CT, cols=MATRIX_ROW_COL_CT, buff=MATRIX_BUFFER)
-    return matrix
-
-#Scene 2
-
-#Create Matrix C with numbers from Matrix A & C
-def createMatrixCScene2():
-    matrix = VGroup()
-    box_list = []
-    
-    for entry in range(MATRIX_ROW_COL_CT**2):
-        box_list.append(createTwoMatrixEntries(MATRIX_A_NUMBERS[entry], MATRIX_B_NUMBERS[entry], MATRIX_A_COLOR, MATRIX_B_COLOR))
-        
-    matrix.add(*box_list)
-    matrix.arrange_in_grid(rows=MATRIX_ROW_COL_CT, cols=MATRIX_ROW_COL_CT, buff=MATRIX_BUFFER)
-    return matrix
-    
 class Fox(Scene):
     def construct(self):
         #Scene 1 - Fade in matrices & signs - Move Matrix A & B enteries to Matrix C
@@ -160,8 +53,8 @@ class Fox(Scene):
         
         #Scene 2 - Fade out Scene 1 Matrices - Fade in Scene 2 Matrix C - Move Matrix C to center
         
-         #Intialize alingment for Scene 2 and matrices for Scene 2
-        LEFT_ALINGMENT = 2.15
+        #Intialize alingment for Scene 2 and matrices for Scene 2
+        LEFT_ALINGMENT = 1.5
         matrixC_scene2 = createMatrixCScene2()
         self.add(matrixC_scene2)
             
@@ -183,14 +76,14 @@ class Fox(Scene):
             target_position = box_center + ORIGIN
             animations.append(boxes.animate.move_to(target_position + LEFT * LEFT_ALINGMENT))
             
-            #Enteries 1
+            #Enteries A
             numbers = matrixC_scene2[entry][1]
             box_center = matrixB_scene1[entry].get_center()
             offset = np.array([-0.32, 0.28, 0])
             target_position = offset + box_center + ORIGIN
             animations.append(numbers.animate.move_to(target_position + LEFT * LEFT_ALINGMENT))   
                 
-            #Enteries 2
+            #Enteries B
             numbers = matrixC_scene2[entry][2]
             box_center = matrixB_scene1[entry].get_center()
             offset = np.array([0.32, 0.28, 0])
@@ -245,12 +138,13 @@ class Fox(Scene):
         self.play(*animations, runtime = 5)
         self.wait(1)
         
-        #Scene 4 - Start Step 2 of the Fox Algorithm process
+        #Scene 4 - Start Step 2 of the Fox Algorithm process 
         
         #Intialize Signs
-        multi_sign = MathTex("\\times")
+        fade_in_animations, fade_out_animations = updateABValuesToC(matrixC_scene2, matrixC_copy) or ([], [])
+        self.play(*fade_in_animations)
+        self.wait(1)
+        self.play(*fade_out_animations)
+        self.wait(1)
         
         
-with tempconfig({"quality": "medium_quality", "disable_caching": True}):
-    scene = Fox()
-    scene.render()
