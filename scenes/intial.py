@@ -57,7 +57,9 @@ def createMatrixCopy(matrix):
     for column in range(MATRIX_ROW_COL_CT - 1):
         for box in range(MATRIX_ROW_COL_CT**2):
             matrixA_copy.append(matrix[box][1].copy())
-            matrixB_copy.append(matrix[box][2].copy())
+            
+    for box in range(MATRIX_ROW_COL_CT**2):
+        matrixB_copy.append(matrix[box][2].copy())
             
     return matrixA_copy, matrixB_copy
 
