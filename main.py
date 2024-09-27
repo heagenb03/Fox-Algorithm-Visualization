@@ -6,6 +6,8 @@ from constants import *
 from scenes.intial import *
 from scenes.scene1 import *
 from scenes.scene2 import *
+from scenes.scene3 import *
+from scenes.scene4 import * 
 
 class Fox(Scene):
     def construct(self):
@@ -96,105 +98,54 @@ class Fox(Scene):
         
         #Scene 3 - Start Step 1 of the Fox Algorithm process 
             # - Move Matrix C first row entries to the right - Move Matrix C middle rows to respective left and right - Move Matrix C last row entries to the left
-        RIGHT_ALINGMENT = 0.3    
-        matrixA_copy, matrixB_copy = createMatrixCopy(matrixC_scene2)
-        matrixC_of_Aij_values = []
+        
+        #Intialize alingment for Scene 3
+        RIGHT_ALINGMENT = 0.3
         
         shift_count = 0
         while shift_count < MATRIX_ROW_COL_CT:
-                
-            #Intialize alingment for Scene 3 - Matrix C copy for animations - Matrix C of distrubited Aij values
+            #Set Animations for Matrix Entries Aij to move - Matrix C copies for animations - Matrix C of distrubited Aij values
+            matrixA_copy, matrixB_copy = createMatrixCopy(matrixC_scene2)
+            matrixC_of_Aij_values = []
+            total_animations = []
             
-            #Set Animations for Matrix Entreries (1) to move 
-            move_animations = []
             for row in range(MATRIX_ROW_COL_CT):
-                #First Row
+                #Entries move accross the row to the right
                 if row == 0:
-                    #Gets each intial entry respective to the matrix copy and moves it across the row to the right
-                    for column in range(MATRIX_ROW_COL_CT - 1):
-                        intial_entry = row + (column * (MATRIX_ROW_COL_CT**2))
-                        final_point_entry = row + (column + 1)
-                        
-                        arcPath = ArcBetweenPoints(matrixA_copy[intial_entry].get_center(), matrixA_copy[final_point_entry].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
-                        move_animations.append(MoveAlongPath(matrixA_copy[intial_entry], arcPath))
-                        matrixC_of_Aij_values.append(matrixA_copy[intial_entry])
-                
-                #Last Row
-                elif row == MATRIX_ROW_COL_CT - 1:
-                    #Gets each intial entry respective to the matrix copy and moves it across the row to the left
-                    for column in range(MATRIX_ROW_COL_CT - 1, 0, -1):
-                        intial_entry = row + (row * MATRIX_ROW_COL_CT) + ((column - 1) * (MATRIX_ROW_COL_CT**2))
-                        final_point_entry = (row + (row * MATRIX_ROW_COL_CT) + ((column - 1) * (MATRIX_ROW_COL_CT**2))) - column
-                        
-                        arcPath = ArcBetweenPoints(matrixA_copy[intial_entry].get_center(), matrixA_copy[final_point_entry].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
-                        move_animations.append(MoveAlongPath(matrixA_copy[intial_entry], arcPath))
-                        matrixC_of_Aij_values.append(matrixA_copy[intial_entry])
-                
-                #Middle Rows
-                else:
-                    #Gets each intial entry respective to the matrix copy and moves it across the row to the right and left based on its intial position
-                    #Columns behind intial position
-                    for back_column in range(row):
-                        intial_entry = (row + (row * MATRIX_ROW_COL_CT)) + (back_column * (MATRIX_ROW_COL_CT**2))
-                        
-                        if back_column == 0:
-                            final_point_entry = row + (row * (MATRIX_ROW_COL_CT - back_column)) - 1
-                            
-                            arcPath = ArcBetweenPoints(matrixA_copy[intial_entry].get_center(), matrixA_copy[final_point_entry].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
-                        else:
-                            final_point_entry = row + (row * (MATRIX_ROW_COL_CT - back_column))
-                            
-                            arcPath = ArcBetweenPoints(matrixA_copy[intial_entry].get_center(), matrixA_copy[final_point_entry].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
-                        
-                        move_animations.append(MoveAlongPath(matrixA_copy[intial_entry], arcPath))
-                        matrixC_of_Aij_values.append(matrixA_copy[intial_entry])
+                    move_animations, aij_values = moveEnteriesAcrossRight(row, matrixA_copy, RIGHT_ALINGMENT)
                     
-                    #Columns in front of intial position
-                    for front_column in range(MATRIX_ROW_COL_CT - (row + 1)):
-                        intial_entry = (row + (row * MATRIX_ROW_COL_CT)) + ((front_column + back_column + 1) * (MATRIX_ROW_COL_CT**2))
-                        final_point_entry = row + (row * (MATRIX_ROW_COL_CT + front_column)) + 1
-                        
-                        arcPath = ArcBetweenPoints(matrixA_copy[intial_entry].get_center(), matrixA_copy[final_point_entry].get_center() + RIGHT * RIGHT_ALINGMENT, angle=PI/2)
-                        move_animations.append(MoveAlongPath(matrixA_copy[intial_entry], arcPath))
-                        matrixC_of_Aij_values.append(matrixA_copy[intial_entry])
+                    total_animations += move_animations
+                    matrixC_of_Aij_values += aij_values
+                    
+                #Entries move across the row to the left
+                elif row == MATRIX_ROW_COL_CT - 1:
+                    move_animations, aij_values = moveEnteriesAcrossLeft(row, matrixA_copy, RIGHT_ALINGMENT)
+
+                    total_animations += move_animations
+                    matrixC_of_Aij_values += aij_values
+        
+                #Entries move across the row to the right and left
+                else:
+                    move_animations, aij_values = moveEnteriesAcrossLeftAndRight(row, matrixA_copy, RIGHT_ALINGMENT)
+                
+                    total_animations += move_animations
+                    matrixC_of_Aij_values += aij_values
             
-            self.play(*move_animations, runtime=5)
+            self.play(*total_animations, runtime=5)
             self.wait(1)
             
             #Scene 4 - Start Step 2 of the Fox Algorithm process - Move Matrix Bij values one row up if applicable - Multiply Matrix Aij values with Matrix Bij values to create new Matrix C values
             
             #Move Matrix Bij values one row up if applicable
-            move_animations = []
-            fade_out_animations = []
-            if shift_count != 0:
-                for row in range(MATRIX_ROW_COL_CT):
-                    #First Row
-                    if row == 0:
-                        for col in range(MATRIX_ROW_COL_CT):
-                            intial_entry = col
-                            final_point_entry = col + (MATRIX_ROW_COL_CT * 2)
-                            
-                            arcPath = ArcBetweenPoints(matrixB_copy[intial_entry].get_center(), matrixB_copy[final_point_entry].get_center() + ORIGIN, angle=PI/2)
-                            move_animations.append(MoveAlongPath(matrixB_copy[intial_entry], arcPath))
-                    #Middle Rows & Final Row
-                    else:
-                        for col in range(MATRIX_ROW_COL_CT):
-                            intial_entry = (col + (row * MATRIX_ROW_COL_CT))
-                            final_point_entry = col + ((row - 1) * MATRIX_ROW_COL_CT)
-                            
-                            arcPath = ArcBetweenPoints(matrixB_copy[intial_entry].get_center(), matrixB_copy[final_point_entry].get_center() + ORIGIN, angle=PI/2)
-                            move_animations.append(MoveAlongPath(matrixB_copy[intial_entry], arcPath))
-                    
-                    #Fade out Previous MatrixBij values
-                    for entry in range(MATRIX_ROW_COL_CT**2):
-                        fade_out_animations.append(FadeOut(matrixC_scene2[entry][2]))
-                
-                self.play(*move_animations, *fade_out_animations, runtime=5)
+            move_animations, fade_out_animations = moveBvalues(shift_count, matrixB_copy, matrixC_scene2)
             
+            if shift_count != 0:
+                self.play(*move_animations, *fade_out_animations, runtime=5)
+                
             self.wait(1)
             
             #Intialize animations to multiply Matrix Aij values with Matrix Bij values to create new Matrix C values
-            fade_in_animations, fade_out_animations = updateABValuesToC(matrixC_scene2, matrixC_of_Aij_values) or ([], [])
+            fade_in_animations, fade_out_animations = updateABValuesToC(matrixC_scene2, matrixC_of_Aij_values)
             
             self.play(*fade_in_animations, runtime=5)
             self.wait(1)

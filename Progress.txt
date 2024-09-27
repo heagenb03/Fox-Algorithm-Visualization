@@ -7,3 +7,4 @@
 9/20: Finished scene 3 - Last row no visualizes step 1 of the fox algorithm with exendibility in mind - Proofread/edited comments & code for understanding
 9/24: Reorganize files & for accessibility and organization - start work on scene 4 with updating entries by their product from entry B and entry A from scene 3. Left off with needing to properly animate the fade out all values 
 9/26: Edit previous code for readibility & accessibility - finished animation for updating Cij values - start and finish work on updating entry Bij values to move up row 
+9/27: Fix up previous animation errors - Organize large chunks of code into functions for accessibility - Brainstorm the movement of Aij values for reach row after first time
