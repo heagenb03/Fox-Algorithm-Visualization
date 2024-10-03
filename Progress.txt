@@ -8,3 +8,4 @@
 9/24: Reorganize files & for accessibility and organization - start work on scene 4 with updating entries by their product from entry B and entry A from scene 3. Left off with needing to properly animate the fade out all values 
 9/26: Edit previous code for readibility & accessibility - finished animation for updating Cij values - start and finish work on updating entry Bij values to move up row 
 9/27: Fix up previous animation errors - Organize large chunks of code into functions for accessibility - Brainstorm the movement of Aij values for reach row after first time
+10/03: Organize functions into apporiate classes for reuse - Debug issues related to creation of new classes/functions - Continue brainstorm/experimetning movement of Aij values for each row - Most likely have to redo functions that move Aij values as they are to hardcoded to work only for the first iteration
