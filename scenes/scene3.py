@@ -62,3 +62,42 @@ class Scene3:
             matrix_values.append(matrix[intial_entry])
             
         return move_animations, matrix_values
+    
+    def moveEnteries(self, count, matrix, entry, alingment):
+        matrix_values = []
+        move_animations = []
+        
+        for row in range(MATRIX_ROW_COL_CT):
+            intial_entry = (count + row) + (MATRIX_ROW_COL_CT if row != 0 else 0) + (row * (MATRIX_ROW_COL_CT**2))
+            
+                
+            
+        return move_animations, matrix_values
+    
+'''
+row_col = 3
+
+def getEntry(row):
+    grouping = [
+        [0, 1, 2], 
+        [3, 4, 5],
+        [6, 7, 8]
+        ]
+    entry = (count + row) + (row_col*row)
+    print(f"g: {grouping[row][row]}")
+    if entry == grouping[row][]:
+        print("right")
+        return entry
+    else:
+        print("wrong")
+        entry = entry - row_col
+        return entry
+
+count = 0
+while count < row_col:
+    for row in range(row_col):
+        intial_entry = getEntry(row)
+        print(f"e: {intial_entry}")
+        
+    count += 1
+'''
