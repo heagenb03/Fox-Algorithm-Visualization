@@ -45,21 +45,17 @@ class Fox(Scene):
         
         #Scene 2 - Fade out Scene 1 Matrices - Fade in Scene 2 Matrix C - Move Matrix C to center
         
-        #Intialize alingment for Scene 2 and matrices for Scene 2
-        LEFT_ALINGMENT = 1.5
-        RIGHT_ALINGMENT = 4.27
-        
         matrixC_scene2 = scene2.createMatrixC()
         self.add(matrixC_scene2)
             
         self.play(
             FadeOut(matrices),
-            FadeIn(matrixC_scene2.shift(RIGHT * RIGHT_ALINGMENT)),
+            FadeIn(matrixC_scene2.shift(RIGHT * scene2.RIGHT_ALINGMENT)),
         )
         self.wait(0.5)
         
+        move_animations = scene2.moveMatrixCtoCenter(matrixB_scene1, matrixC_scene2)
         matrices.remove(matrixA_scene1, matrixB_scene1, matrixC_scene1, self.equal_sign, self.multi_sign)
-        move_animations = scene2.moveMatrixCtoCenter(matrixB_scene1, matrixC_scene2, LEFT_ALINGMENT)
         
         self.play(*move_animations)
         self.wait(0.5)
@@ -67,55 +63,57 @@ class Fox(Scene):
         #Scene 3 - Start Step 1 of the Fox Algorithm process 
             # - Move Matrix C first row entries to the right - Move Matrix C middle rows to respective left and right - Move Matrix C last row entries to the left
         
-        #Intialize alingment for Scene 3
-        RIGHT_ALINGMENT = 0.3
-        
         shift_count = 0
-        while shift_count < 2:
+        while shift_count < MATRIX_ROW_COL_CT:
             #Set Animations for Matrix Entries Aij to move - Matrix C copies for animations - Matrix C of distrubited Aij values
+            
+            '''
             matrixA_copy, matrixB_copy = intial.createMatrixCopy(matrixC_scene2)
             matrixC_of_Aij_values = []
             total_animations = []
+            
+            scene3.moveEnteries(matrixC_scene2, shift_count)
             
             for row in range(MATRIX_ROW_COL_CT):
                 #Entries move accross the row to the right
                 if row == 0:
                     intial_entry =  row + (row * (MATRIX_ROW_COL_CT**2)) + shift_count
                     
-                    move_animations, aij_values = scene3.moveEnteriesAcrossRight(row, matrixA_copy, intial_entry, RIGHT_ALINGMENT)
+                    move_animations, aij_values = scene3.moveEnteriesAcrossRight(row, matrixA_copy, intial_entry)
                     
                     total_animations += move_animations
                     matrixC_of_Aij_values += aij_values
                     
                 #Entries move across the row to the left
                 elif row == MATRIX_ROW_COL_CT - 1:
-                    move_animations, aij_values = scene3.moveEnteriesAcrossLeft(row, matrixA_copy, RIGHT_ALINGMENT)
+                    move_animations, aij_values = scene3.moveEnteriesAcrossLeft(row, matrixA_copy)
 
                     total_animations += move_animations
                     matrixC_of_Aij_values += aij_values
         
                 #Entries move across the row to the right and left
                 else:
-                    move_animations, aij_values = scene3.moveEnteriesAcrossLeftAndRight(row, matrixA_copy, RIGHT_ALINGMENT)
+                    move_animations, aij_values = scene3.moveEnteriesAcrossLeftAndRight(row, matrixA_copy)
                 
                     total_animations += move_animations
                     matrixC_of_Aij_values += aij_values
             
             self.play(*total_animations, runtime=5)
             self.wait(1)
+            '''
             
             #Scene 4 - Start Step 2 of the Fox Algorithm process - Move Matrix Bij values one row up if applicable - Multiply Matrix Aij values with Matrix Bij values to create new Matrix C values
             
             #Move Matrix Bij values one row up if applicable
-            move_animations, fade_out_animations = scene4.moveBvalues(shift_count, matrixB_copy, matrixC_scene2)
+            move_animations, matrixC_scene2 = scene4.moveBvalues(shift_count, matrixC_scene2)
             
             if shift_count != 0:
-                self.play(*move_animations, *fade_out_animations, runtime=5)
+                self.play(*move_animations, runtime=5)
                 
             self.wait(1)
             
             #Intialize animations to multiply Matrix Aij values with Matrix Bij values to create new Matrix C values
-            fade_in_animations, fade_out_animations = scene4.updateABValuesToC(matrixC_scene2, matrixC_of_Aij_values)
+            fade_in_animations, fade_out_animations = scene4.updateABValuesToC(matrixC_scene2)
             
             self.play(*fade_in_animations, runtime=5)
             self.wait(1)

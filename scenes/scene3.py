@@ -4,20 +4,23 @@ from intial import *
 
 #Scene 3
 class Scene3:
-    def moveEnteriesAcrossRight(self, row, matrix, entry, alingment):
+    def __init__(self):
+        self.RIGHT_ALINGMENT = 0.3
+    
+    def moveEnteriesAcrossRight(self, row, matrix, entry):
         matrix_values = []
         move_animations = []
     
         for column in range(MATRIX_ROW_COL_CT - 1):
             final_point_entry = row + (column + 1)
             
-            arcPath = ArcBetweenPoints(matrix[entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * alingment, angle=PI/2)
+            arcPath = ArcBetweenPoints(matrix[entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * self.RIGHT_ALINGMENT, angle=PI/2)
             move_animations.append(MoveAlongPath(matrix[entry], arcPath))
             matrix_values.append(matrix[entry])
             
         return move_animations, matrix_values
         
-    def moveEnteriesAcrossLeft(self, row, matrix, alingment):
+    def moveEnteriesAcrossLeft(self, row, matrix):
         matrix_values = []
         move_animations = []
         
@@ -25,13 +28,13 @@ class Scene3:
             intial_entry = row + (row * MATRIX_ROW_COL_CT) + ((column - 1) * (MATRIX_ROW_COL_CT**2))
             final_point_entry = (row + (row * MATRIX_ROW_COL_CT) + ((column - 1) * (MATRIX_ROW_COL_CT**2))) - column
             
-            arcPath = ArcBetweenPoints(matrix[intial_entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * alingment, angle=PI/2)
+            arcPath = ArcBetweenPoints(matrix[intial_entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * self.RIGHT_ALINGMENT, angle=PI/2)
             move_animations.append(MoveAlongPath(matrix[intial_entry], arcPath))
             matrix_values.append(matrix[intial_entry])
             
         return move_animations, matrix_values
 
-    def moveEnteriesAcrossLeftAndRight(self, row, matrix, alingment):
+    def moveEnteriesAcrossLeftAndRight(self, row, matrix):
         matrix_values = []
         move_animations = []
         
@@ -43,11 +46,11 @@ class Scene3:
             if back_column == 0:
                 final_point_entry = row + (row * (MATRIX_ROW_COL_CT - back_column)) - 1
                 
-                arcPath = ArcBetweenPoints(matrix[intial_entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * alingment, angle=PI/2)
+                arcPath = ArcBetweenPoints(matrix[intial_entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * self.RIGHT_ALINGMENT, angle=PI/2)
             else:
                 final_point_entry = row + (row * (MATRIX_ROW_COL_CT - back_column))
                 
-                arcPath = ArcBetweenPoints(matrix[intial_entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * alingment, angle=PI/2)
+                arcPath = ArcBetweenPoints(matrix[intial_entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * self.RIGHT_ALINGMENT, angle=PI/2)
             
             move_animations.append(MoveAlongPath(matrix[intial_entry], arcPath))
             matrix_values.append(matrix[intial_entry])
@@ -57,23 +60,26 @@ class Scene3:
             intial_entry = (row + (row * MATRIX_ROW_COL_CT)) + ((front_column + back_column + 1) * (MATRIX_ROW_COL_CT**2))
             final_point_entry = row + (row * (MATRIX_ROW_COL_CT + front_column)) + 1
             
-            arcPath = ArcBetweenPoints(matrix[intial_entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * alingment, angle=PI/2)
+            arcPath = ArcBetweenPoints(matrix[intial_entry].get_center(), matrix[final_point_entry].get_center() + RIGHT * self.RIGHT_ALINGMENT, angle=PI/2)
             move_animations.append(MoveAlongPath(matrix[intial_entry], arcPath))
             matrix_values.append(matrix[intial_entry])
             
         return move_animations, matrix_values
     
-    def moveEnteries(self, count, matrix, entry, alingment):
+    def moveEnteries(self, matrix, count):
         matrix_values = []
         move_animations = []
+        values_moving = []
         
-        for row in range(MATRIX_ROW_COL_CT):
-            intial_entry = (count + row) + (MATRIX_ROW_COL_CT if row != 0 else 0) + (row * (MATRIX_ROW_COL_CT**2))
+        for value in range(MATRIX_ROW_COL_CT):
+            number = count * (MATRIX_ROW_COL_CT) + value*(MATRIX_ROW_COL_CT + 1)
             
-                
-            
-        return move_animations, matrix_values
-    
+            values_moving.append(number)
+        
+        print(values_moving)
+        
+        for row in range(MATRIX_ROW_COL_CT**2):
+            values = matrix[row][1].text    
 '''
 row_col = 3
 

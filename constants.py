@@ -24,7 +24,7 @@ MATRIX_B_COLOR = YELLOW
 #OR
 
 MATRIX_B_NUMBERS = []
-for entry in range(MATRIX_ROW_COL_CT**2, 0, -1): #Increment values from x to 1
+for entry in range(MATRIX_ROW_COL_CT**2, 0, -1): #Decrement values from x to 1
    MATRIX_B_NUMBERS.append(entry)
 
 
