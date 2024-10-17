@@ -72,8 +72,10 @@ class Fox(Scene):
             matrixC_of_Aij_values = []
             total_animations = []
             
+            '''
             scene3.moveEnteries(matrixC_scene2, shift_count)
             
+            '''
             for row in range(MATRIX_ROW_COL_CT):
                 #Entries move accross the row to the right
                 if row == 0:

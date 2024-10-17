@@ -78,32 +78,5 @@ class Scene3:
         
         print(values_moving)
         
-        for row in range(MATRIX_ROW_COL_CT**2):
-            values = matrix[row][1].text    
-'''
-row_col = 3
-
-def getEntry(row):
-    grouping = [
-        [0, 1, 2], 
-        [3, 4, 5],
-        [6, 7, 8]
-        ]
-    entry = (count + row) + (row_col*row)
-    print(f"g: {grouping[row][row]}")
-    if entry == grouping[row][]:
-        print("right")
-        return entry
-    else:
-        print("wrong")
-        entry = entry - row_col
-        return entry
-
-count = 0
-while count < row_col:
-    for row in range(row_col):
-        intial_entry = getEntry(row)
-        print(f"e: {intial_entry}")
-        
-    count += 1
-'''
+        for row in range(MATRIX_ROW_COL_CT):
+            matrix[] 
