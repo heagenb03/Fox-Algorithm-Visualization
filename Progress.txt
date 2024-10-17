@@ -10,3 +10,4 @@
 9/27: Fix up previous animation errors - Organize large chunks of code into functions for accessibility - Brainstorm the movement of Aij values for reach row after first time
 10/03: Organize functions into apporiate classes for reuse - Debug issues related to creation of new classes/functions - Continue brainstorm/experimetning movement of Aij values for each row - Most likely have to redo functions that move Aij values as they are to hardcoded to work only for the first iteration
 10/04: Continue work on the movement of Aij for each rows 
+10/05: Continue brainstorm the movement of Aij rows and update the VGroup of matrices - figure out key points of error and rewrite of code to address it and find altneratives

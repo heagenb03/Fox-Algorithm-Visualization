@@ -1,8 +1,12 @@
-from manim import Rectangle, VGroup, Text, DOWN, RIGHT, UL, UR, LEFT
+from manim import Rectangle, VGroup, Text, UP, DOWN, RIGHT, UL, UR, DL, DR, LEFT
 from constants import *
 
 #Intialize functions utilized in the scenes
 class Intial:
+    def __init__(self):
+        self.VERT_ALINGMENT = 0.1
+        self.HORIZONTAL_ALINGMENT = 0.1
+    
     #Creates the individual "box" within a matrix
     def createMatrixBox(self):
         matrix_box = Rectangle(
@@ -32,22 +36,26 @@ class Intial:
         
         return result
 
-    #Intailize a "box" with two enteries
-    def createTwoMatrixEntries(self, first_num, second_num, first_txt_color, second_txt_color):
-        DOWN_ALINGMENT = 0.1
-        RIGHT_ALINGMENT = 0.1
+    #Intailize a "box" with two enteries + two empty enteries
+    def createMatrixFourEntries(self, first_num, second_num, first_txt_color, second_txt_color, third_txt_color):
         result = VGroup()
         matrix_box = self.createMatrixBox()
         
         first_entry = Text(str(first_num), font_size=MATRIX_FONT_SIZE, color=first_txt_color, fill_opacity=0.9)
         second_entry = Text(str(second_num), font_size=MATRIX_FONT_SIZE, color=second_txt_color, fill_opacity=0.9)
-        first_entry.align_to(matrix_box, UL).shift(DOWN * DOWN_ALINGMENT + RIGHT * RIGHT_ALINGMENT)
-        second_entry.align_to(matrix_box, UR).shift(DOWN * DOWN_ALINGMENT + LEFT * RIGHT_ALINGMENT)
+        third_entry = Text('0', font_size=MATRIX_FONT_SIZE, color=first_txt_color, fill_opacity=0.9) #Entry the Moved Aij values go to
+        fourth_entry = Text('0', font_size=MATRIX_FONT_SIZE, color=third_txt_color, fill_opacity=0.9) #Computed C Values go to
         
-        result.add(matrix_box, first_entry, second_entry)
+        first_entry.align_to(matrix_box, UL).shift(DOWN * self.VERT_ALINGMENT + RIGHT * self.HORIZONTAL_ALINGMENT)
+        second_entry.align_to(matrix_box, UR).shift(DOWN * self.VERT_ALINGMENT + LEFT * self.HORIZONTAL_ALINGMENT)
+        third_entry.align_to(matrix_box).shift(UP * self.VERT_ALINGMENT + LEFT * self.HORIZONTAL_ALINGMENT)
+        fourth_entry.align_to(matrix_box, DR).shift(UP * self.VERT_ALINGMENT)
+        
+        result.add(matrix_box, first_entry, second_entry, third_entry, fourth_entry)
         
         return result
 
+    '''
     #Creates a copy of the entries in the matrix to be used for animations
     def createMatrixCopy(self, matrix):
         matrixA_copy = []
@@ -61,4 +69,4 @@ class Intial:
             matrixB_copy.append(matrix[box][2].copy())
                 
         return matrixA_copy, matrixB_copy
-                
+    '''

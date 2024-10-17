@@ -15,7 +15,7 @@ class Scene2:
         box_list = []
         
         for entry in range(MATRIX_ROW_COL_CT**2):
-            box_list.append(self.intial.createTwoMatrixEntries(MATRIX_A_NUMBERS[entry], MATRIX_B_NUMBERS[entry], MATRIX_A_COLOR, MATRIX_B_COLOR))
+            box_list.append(self.intial.createMatrixFourEntries(MATRIX_A_NUMBERS[entry], MATRIX_B_NUMBERS[entry], MATRIX_A_COLOR, MATRIX_B_COLOR, C_VALUES_COLOR))
             
         matrix.add(*box_list)
         matrix.arrange_in_grid(rows=MATRIX_ROW_COL_CT, cols=MATRIX_ROW_COL_CT, buff=MATRIX_BUFFER)
@@ -42,6 +42,20 @@ class Scene2:
             numbers = matrixC[entry][2]
             box_center = matrixB[entry].get_center()
             offset = np.array([0.32, 0.28, 0])
+            target_position = offset + box_center + ORIGIN
+            move_animations.append(numbers.animate.move_to(target_position + LEFT * self.LEFT_ALINGMENT))
+            
+            #Enteries for moved Aij values
+            numbers = matrixC[entry][3]
+            box_center = matrixB[entry].get_center()
+            offset = np.array([-0.32, -0.28, 0])
+            target_position = offset + box_center + ORIGIN
+            move_animations.append(numbers.animate.move_to(target_position + LEFT * self.LEFT_ALINGMENT))
+            
+            #Enteries for computed C values
+            numbers = matrixC[entry][4]
+            box_center = matrixB[entry].get_center()
+            offset = np.array([0.32, -0.28, 0])
             target_position = offset + box_center + ORIGIN
             move_animations.append(numbers.animate.move_to(target_position + LEFT * self.LEFT_ALINGMENT))
             
