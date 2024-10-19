@@ -1,4 +1,4 @@
-from manim import Rectangle, VGroup, Text, UP, DOWN, RIGHT, UL, UR, DR, DL, LEFT
+from manim import Rectangle, VGroup, Text, np, UP, DOWN, RIGHT, UL, UR, DR, DL, LEFT, ORIGIN
 from constants import *
 
 #Intialize functions utilized in the scenes
@@ -81,3 +81,31 @@ class Intial:
         
         result.add(matrix_box, first_entry, second_entry, third_entry, fourth_entry)
         return result
+    
+    def getTargetPosition(matrix, index, vgroup):
+        """Gets target position for each entry to corresponding position in each box in each matrix
+
+        Args:
+            matrix (VGroup): Matrix used to act as the reference for position
+            index (int): Which box in the matrix to act as the reference for position
+            vgroup (int): Which entry in the box is being moved 
+
+        Returns:
+            _type_: _description_
+        """
+        box_center = matrix[index].get_center()
+        
+        if vgroup == 0:
+            offset = 0
+        elif vgroup == 1:
+            offset = np.array([-0.32, 0.28, 0])
+        elif vgroup == 2:
+            offset = np.array([0.32, 0.28, 0])
+        elif vgroup == 3: 
+            offset = np.array([-0.32, -0.28, 0])
+        elif vgroup == 4:
+            offset = np.array([0.32, -0.28, 0])
+        
+        target_position = offset + box_center + ORIGIN
+        
+        return target_position

@@ -38,37 +38,28 @@ class Scene2:
         
         for entry in range((MATRIX_ROW_COL_CT**2)):
             #Matrix C
-            boxes = matrixC[entry][0]
-            box_center = matrixB[entry].get_center()
-            target_position = box_center + ORIGIN
-            move_animations.append(boxes.animate.move_to(target_position + LEFT * self.LEFT_ALINGMENT))
+            vgroup = 0
+            boxes = matrixC[entry][vgroup]
+            move_animations.append(boxes.animate.move_to(self.intial.getTargetPosition(matrixB, entry, vgroup) + LEFT * self.LEFT_ALINGMENT))
             
             #Enteries A
-            numbers = matrixC[entry][1]
-            box_center = matrixB[entry].get_center()
-            offset = np.array([-0.32, 0.28, 0])
-            target_position = offset + box_center + ORIGIN
-            move_animations.append(numbers.animate.move_to(target_position + LEFT * self.LEFT_ALINGMENT))   
+            vgroup = 1
+            numbers = matrixC[entry][vgroup]
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, vgroup) + LEFT * self.LEFT_ALINGMENT))   
                 
             #Enteries B
-            numbers = matrixC[entry][2]
-            box_center = matrixB[entry].get_center()
-            offset = np.array([0.32, 0.28, 0])
-            target_position = offset + box_center + ORIGIN
-            move_animations.append(numbers.animate.move_to(target_position + LEFT * self.LEFT_ALINGMENT))
+            vgroup = 2
+            numbers = matrixC[entry][vgroup]
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, vgroup) + LEFT * self.LEFT_ALINGMENT))
             
             #Enteries for moved Aij values
-            numbers = matrixC[entry][3]
-            box_center = matrixB[entry].get_center()
-            offset = np.array([-0.32, -0.28, 0])
-            target_position = offset + box_center + ORIGIN
-            move_animations.append(numbers.animate.move_to(target_position + LEFT * self.LEFT_ALINGMENT))
+            vgroup = 3
+            numbers = matrixC[entry][vgroup]
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, vgroup) + LEFT * self.LEFT_ALINGMENT))
             
             #Enteries for computed C values
-            numbers = matrixC[entry][4]
-            box_center = matrixB[entry].get_center()
-            offset = np.array([0.32, -0.28, 0])
-            target_position = offset + box_center + ORIGIN
-            move_animations.append(numbers.animate.move_to(target_position + LEFT * self.LEFT_ALINGMENT))
+            vgroup = 4
+            numbers = matrixC[entry][vgroup]
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, vgroup) + LEFT * self.LEFT_ALINGMENT))
             
         return move_animations

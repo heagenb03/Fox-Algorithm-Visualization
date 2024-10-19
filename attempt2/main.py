@@ -6,6 +6,7 @@ from constants import *
 from scenes.intial import Intial
 from scenes.scene1 import Scene1
 from scenes.scene2 import Scene2
+from scenes.scene3 import Scene3
 
 class Fox(Scene):
     def construct(self):
@@ -19,6 +20,7 @@ class Fox(Scene):
         intial = Intial()
         scene1 = Scene1()
         scene2 = Scene2()
+        scene3 = Scene3()
         
         multi_sign = MathTex("\\times")
         equal_sign = MathTex("=")
@@ -68,4 +70,13 @@ class Fox(Scene):
         Scene 3
             1. 
         """
+        
+        shift_count = 0
+        while shift_count < MATRIX_ROW_COL_CT:
+            matrixC_scene3 = scene3.updateMatrixC(matrixC_scene2)
+            
+            self.play(FadeIn(matrixC_scene3))
+            
+            shift_count += 1
+            
         

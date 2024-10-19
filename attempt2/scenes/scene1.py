@@ -70,16 +70,11 @@ class Scene1:
         move_animations = []
         
         for entry in range(MATRIX_ROW_COL_CT**2):
-            numbers = matrixA[entry][1]
-            box_center = matrixC[entry].get_center()
-            offset = np.array([-0.32, 0.28, 0])
-            target_position = box_center + offset
-            move_animations.append(numbers.animate.move_to(target_position)) 
+            vgroup = 1
+            numbers = matrixA[entry][vgroup]
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixC, entry, vgroup))) 
             
-            numbers = matrixB[entry][1]
-            box_center = matrixC[entry].get_center()
-            offset = np.array([0.32, 0.28, 0])
-            target_position = box_center + offset
-            move_animations.append(numbers.animate.move_to(target_position)) 
+            numbers = matrixB[entry][vgroup]
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixC, entry, vgroup + 1))) 
         
         return move_animations
