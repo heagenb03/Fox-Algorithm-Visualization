@@ -37,14 +37,14 @@ class Intial:
         return result
 
     #Intailize a "box" with two enteries + two empty enteries
-    def createMatrixFourEntries(self, first_num, second_num, first_txt_color, second_txt_color, third_txt_color):
+    def createMatrixFourEntries(self, first_num, second_num, third_num, fourth_num, first_txt_color, second_txt_color, third_txt_color):
         result = VGroup()
         matrix_box = self.createMatrixBox()
         
         first_entry = Text(str(first_num), font_size=MATRIX_FONT_SIZE, color=first_txt_color, fill_opacity=0.9)
         second_entry = Text(str(second_num), font_size=MATRIX_FONT_SIZE, color=second_txt_color, fill_opacity=0.9)
-        third_entry = Text('0', font_size=MATRIX_FONT_SIZE, color=first_txt_color, fill_opacity=0.9) #Entry the Moved Aij values go to
-        fourth_entry = Text('0', font_size=MATRIX_FONT_SIZE, color=third_txt_color, fill_opacity=0.9) #Computed C Values go to
+        third_entry = Text(str(third_num), font_size=MATRIX_FONT_SIZE, color=first_txt_color, fill_opacity=0.9) #Entry the Moved Aij values go to
+        fourth_entry = Text(str(fourth_num), font_size=MATRIX_FONT_SIZE, color=third_txt_color, fill_opacity=0.9) #Computed C Values go to
         
         first_entry.align_to(matrix_box, UL).shift(DOWN * self.VERT_ALINGMENT + RIGHT * self.HORIZONTAL_ALINGMENT)
         second_entry.align_to(matrix_box, UR).shift(DOWN * self.VERT_ALINGMENT + LEFT * self.HORIZONTAL_ALINGMENT)

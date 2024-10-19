@@ -15,7 +15,7 @@ class Scene2:
         box_list = []
         
         for entry in range(MATRIX_ROW_COL_CT**2):
-            box_list.append(self.intial.createMatrixFourEntries(MATRIX_A_NUMBERS[entry], MATRIX_B_NUMBERS[entry], MATRIX_A_COLOR, MATRIX_B_COLOR, C_VALUES_COLOR))
+            box_list.append(self.intial.createMatrixFourEntries(MATRIX_A_NUMBERS[entry], MATRIX_B_NUMBERS[entry], 0, 0, MATRIX_A_COLOR, MATRIX_B_COLOR, C_VALUES_COLOR))
             
         matrix.add(*box_list)
         matrix.arrange_in_grid(rows=MATRIX_ROW_COL_CT, cols=MATRIX_ROW_COL_CT, buff=MATRIX_BUFFER)

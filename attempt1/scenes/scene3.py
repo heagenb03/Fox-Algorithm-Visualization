@@ -1,12 +1,13 @@
-from manim import ArcBetweenPoints, MoveAlongPath, PI, RIGHT
+from manim import ArcBetweenPoints, VGroup, MoveAlongPath, PI, RIGHT
 from constants import *
 from intial import *
 
 #Scene 3
 class Scene3:
     def __init__(self):
+        self.intial = Intial()
         self.RIGHT_ALINGMENT = 0.3
-    
+
     def moveEnteriesAcrossRight(self, row, matrix, entry):
         matrix_values = []
         move_animations = []
@@ -79,4 +80,15 @@ class Scene3:
         print(values_moving)
         
         for row in range(MATRIX_ROW_COL_CT):
-            matrix[] 
+            pass
+    
+    def updateMatrixC(self, matrix):
+        matrix = VGroup()
+        box_list = []
+        
+        for entry in range(MATRIX_ROW_COL_CT**2):
+            box_list.append(self.intial.createMatrixFourEntries(matrix[entry][1], matrix[entry][2], matrix[entry][3], matrix[entry][4], MATRIX_A_COLOR, MATRIX_B_COLOR, C_VALUES_COLOR))
+
+        matrix.add(*box_list)
+        matrix.arrange_in_grid(rows=MATRIX_ROW_COL_CT, cols=MATRIX_ROW_COL_CT, buff=MATRIX_BUFFER)
+        return matrix
