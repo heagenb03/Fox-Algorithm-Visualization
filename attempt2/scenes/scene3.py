@@ -10,14 +10,12 @@ class Scene3:
     
     def moveEnteriesAcrossRight(self, matrix, entry):
         move_animations = []
-
         for column in range(MATRIX_ROW_COL_CT - 1):
-            final_point_entry = column + 1
-            alingment = DOWN * self.DOWN_ALINGMENT
-            
-            arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center() + alingment, angle=PI/2)
+            final_point_entry = entry + column + 1
+
+            arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
             move_animations.append(MoveAlongPath(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].copy(), arcPath))
-        
+            
         return move_animations
     
     def updateMatrixC(self, matrixC):

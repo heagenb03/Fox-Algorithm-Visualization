@@ -13,4 +13,4 @@
 10/05: Continue brainstorm the movement of Aij rows and update the VGroup of matrices - figure out key points of error and rewrite of code to address it and find altneratives
 10/17: Continue previous work
 10/19: "Restarted" work - created new folder as attempt two as attempt 1 was getting too "junky" - Work on copying old code to new files as well as debugging old code - Worked on the movemeant of Aij for each rows 
-10/20: Make progress on the movement of Aij rows - experiment and work on integrating NumPy arrays to the matrices
+10/20: Make progress on the movement of Aij rows - experiment and work on integrating NumPy arrays to the matrices - Aij values that shift across the row towards the right now move when needed
