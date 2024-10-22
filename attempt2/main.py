@@ -1,4 +1,4 @@
-from manim import VGroup, Scene, FadeIn, FadeOut, MathTex, RendererType, RIGHT, LEFT, ORIGIN
+from manim import VGroup, Scene, FadeIn, FadeOut, MathTex, RendererType, Text, RIGHT, LEFT, ORIGIN
 import sys
 sys.path.insert(0, 'scenes')
 
@@ -69,13 +69,21 @@ class Fox(Scene):
         """
         Scene 3
             1. 
-        """
+        """        
+        matrixC_entryA_array = intial.retunMatrixAsArray(matrixC_scene2, MATRIX_C_ENTRY_A_VGROUP)
+        matrixC_entryB_array = intial.retunMatrixAsArray(matrixC_scene2, MATRIX_C_ENTRY_B_VGROUP)
         
         shift_count = 0
         while shift_count < MATRIX_ROW_COL_CT:
-            matrixC_scene3 = scene3.updateMatrixC(matrixC_scene2)
-            
-            self.play(FadeIn(matrixC_scene3))
+            for row in range(MATRIX_ROW_COL_CT):
+                col = shift_count + row
+                if col >= MATRIX_ROW_COL_CT:
+                    col = abs(MATRIX_ROW_COL_CT - col)
+                
+                move_entry_pos = 0 if col == 0 else ((row + col) * 2)
+                if move_entry_pos == 0:
+                    move_animations = scene3.moveEnteriesAcrossRight(matrixC_scene2, move_entry_pos)
+                    self.play(*move_animations)
             
             shift_count += 1
             

@@ -1,3 +1,4 @@
+from manim import ArcBetweenPoints, MoveAlongPath, PI, RIGHT, Text
 from constants import *
 from intial import *
 
@@ -5,6 +6,19 @@ class Scene3:
     def __init__(self):
         self.intial = Intial()
         self.LEFT_ALINGMENT = 1.5
+        self.DOWN_ALINGMENT = 0.3
+    
+    def moveEnteriesAcrossRight(self, matrix, entry):
+        move_animations = []
+
+        for column in range(MATRIX_ROW_COL_CT - 1):
+            final_point_entry = column + 1
+            alingment = DOWN * self.DOWN_ALINGMENT
+            
+            arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center() + alingment, angle=PI/2)
+            move_animations.append(MoveAlongPath(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].copy(), arcPath))
+        
+        return move_animations
     
     def updateMatrixC(self, matrixC):
         matrix = matrixC.copy()

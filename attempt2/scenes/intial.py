@@ -1,5 +1,6 @@
 from manim import Rectangle, VGroup, Text, np, UP, DOWN, RIGHT, UL, UR, DR, DL, LEFT, ORIGIN
 from constants import *
+import numpy as np
 
 #Intialize functions utilized in the scenes
 class Intial:
@@ -82,7 +83,7 @@ class Intial:
         result.add(matrix_box, first_entry, second_entry, third_entry, fourth_entry)
         return result
     
-    def getTargetPosition(matrix, index, vgroup):
+    def getTargetPosition(self, matrix, index, vgroup):
         """Gets target position for each entry to corresponding position in each box in each matrix
 
         Args:
@@ -95,17 +96,26 @@ class Intial:
         """
         box_center = matrix[index].get_center()
         
-        if vgroup == 0:
+        if vgroup == MATRIX_C_BOX_VGROUP:
             offset = 0
-        elif vgroup == 1:
+        elif vgroup == MATRIX_C_ENTRY_A_VGROUP:
             offset = np.array([-0.32, 0.28, 0])
-        elif vgroup == 2:
+        elif vgroup == MATRIX_C_ENTRY_B_VGROUP:
             offset = np.array([0.32, 0.28, 0])
-        elif vgroup == 3: 
+        elif vgroup == MATRIX_C_ENTRY_AIJ_MOVED_VGROUP: 
             offset = np.array([-0.32, -0.28, 0])
-        elif vgroup == 4:
+        elif vgroup == MATRIX_C_ENTRY_COMPUTED_C_VGROUP:
             offset = np.array([0.32, -0.28, 0])
         
         target_position = offset + box_center + ORIGIN
         
         return target_position
+    
+    def retunMatrixAsArray(self, matrix, vgroup):
+        matrix_list = []
+        for entry in range(MATRIX_ROW_COL_CT**2):
+            matrix_list.append(matrix[entry][vgroup].get_text())
+        
+        np_matrix_array = np.array(matrix_list).reshape(MATRIX_ROW_COL_CT, MATRIX_ROW_COL_CT)
+        
+        return np_matrix_array
