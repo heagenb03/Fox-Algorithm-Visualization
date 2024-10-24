@@ -76,6 +76,7 @@ class Fox(Scene):
         shift_count = 0
         while shift_count < MATRIX_ROW_COL_CT:
             total_animations = []
+            scene3.moved_aij_values = []
             
             for row in range(MATRIX_ROW_COL_CT):
                 col = shift_count + row
@@ -88,8 +89,20 @@ class Fox(Scene):
                     print(f"Move entries {move_entry_pos} to the right")
                     move_animations = scene3.moveEnteriesAcrossRight(matrixC_scene2, move_entry_pos)
                     total_animations.extend(move_animations)
-
+                    
+                elif col == MATRIX_ROW_COL_CT - 1:
+                    print(f"Move entries {move_entry_pos} to the left")
+                    move_animations = scene3.moveEnteriesAcrossLeft(matrixC_scene2, move_entry_pos)
+                    total_animations.extend(move_animations)
+                    
+                else:
+                    print(f"Move entries {move_entry_pos} to the right and left")
+                    move_animations = scene3.moveEnteriesAcrossRightAndLeft(matrixC_scene2, move_entry_pos, col)
+                    total_animations.extend(move_animations)
+                
             self.play(*total_animations)
+            print(scene3.moved_aij_values)
+            
             shift_count += 1
             
         

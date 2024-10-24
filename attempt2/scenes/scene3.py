@@ -7,7 +7,8 @@ class Scene3:
         self.intial = Intial()
         self.LEFT_ALINGMENT = 1.5
         self.DOWN_ALINGMENT = 0.3
-    
+        self.moved_aij_values = []
+        
     def moveEnteriesAcrossRight(self, matrix, entry):
         move_animations = []
         for column in range(MATRIX_ROW_COL_CT - 1):
@@ -16,17 +17,47 @@ class Scene3:
             arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
             move_animations.append(MoveAlongPath(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].copy(), arcPath))
             
+        self.moved_aij_values.append(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_text())
+            
         return move_animations
     
-    def updateMatrixC(self, matrixC):
-        matrix = matrixC.copy()
-        
-        for entry in range(MATRIX_ROW_COL_CT**2):
-            entry3 = MATRIX_A_NUMBERS[entry]
-            entry4 = entry3 * MATRIX_B_NUMBERS[entry]
+    def moveEnteriesAcrossLeft(self, matrix, entry):
+        move_animations = []
+        for column in range(MATRIX_ROW_COL_CT - 1, 0, -1):
+            final_point_entry = entry - column
             
-            matrix[entry][3] = Text(str(entry3), font_size=MATRIX_FONT_SIZE, color=MATRIX_A_COLOR, fill_opacity=MATRIX_TEXT_OPACITY).move_to(self.intial.getTargetPosition(matrixC, entry, 3) + LEFT * self.LEFT_ALINGMENT)
-            matrix[entry][4] = Text(str(entry4), font_size=MATRIX_FONT_SIZE, color=C_VALUES_COLOR, fill_opacity=MATRIX_TEXT_OPACITY).move_to(self.intial.getTargetPosition(matrixC, entry, 4) + LEFT * self.LEFT_ALINGMENT)
+            arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
+            move_animations.append(MoveAlongPath(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].copy(), arcPath))
+            
+        self.moved_aij_values.append(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_text())
+            
+        return move_animations
+    
+    def moveEnteriesAcrossRightAndLeft(self, matrix, entry, column):
+        move_animations = []
         
-        return matrix
+        #Columns behind intial position
+        for back_column in range((MATRIX_ROW_COL_CT - 1) - column):
+            final_point_entry = entry - back_column - 1
+                
+            arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
+            move_animations.append(MoveAlongPath(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].copy(), arcPath))
         
+        #Columns in front of intial position
+        for front_column in range((MATRIX_ROW_COL_CT - 1) - column):
+            final_point_entry = entry + front_column + 1
+            
+            arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
+            move_animations.append(MoveAlongPath(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].copy(), arcPath))
+        
+        self.moved_aij_values.append(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_text())
+        
+        return move_animations
+    
+    def updateComputedCValues(self, matrix):
+        for box in range(MATRIX_ROW_COL_CT):
+            entry_a = int(matrix[box][MATRIX_C_ENTRY_A_VGROUP].get_text())
+            entry_b = int(matrix[box][MATRIX_C_ENTRY_B_VGROUP].get_text())
+            
+            value_c = entry_a * entry_b
+            matrix[box][MATRIX_C_ENTRY_COMPUTED_C_VGROUP].set_text(str(value_c))
