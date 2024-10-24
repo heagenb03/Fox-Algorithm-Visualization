@@ -70,13 +70,15 @@ class Fox(Scene):
         Scene 3
             1. 
         """        
-        matrixC_entryA_array = intial.retunMatrixAsArray(matrixC_scene2, MATRIX_C_ENTRY_A_VGROUP)
-        matrixC_entryB_array = intial.retunMatrixAsArray(matrixC_scene2, MATRIX_C_ENTRY_B_VGROUP)
+        matrixC_entryA_array = intial.retunMatrixAs2dArray(matrixC_scene2, MATRIX_C_ENTRY_A_VGROUP)
+        matrixC_entryB_array = intial.retunMatrixAs2dArray(matrixC_scene2, MATRIX_C_ENTRY_B_VGROUP)
         
         shift_count = 0
         while shift_count < MATRIX_ROW_COL_CT:
-            total_animations = []
+            total_move_animations = []
+            total_fade_out_animations = []
             scene3.moved_aij_values = []
+            scene3.temp_computed_c_values = []
             
             for row in range(MATRIX_ROW_COL_CT):
                 col = shift_count + row
@@ -86,22 +88,30 @@ class Fox(Scene):
                     
                 move_entry_pos = (row * MATRIX_ROW_COL_CT) + col
                 if col == 0:
-                    print(f"Move entries {move_entry_pos} to the right")
-                    move_animations = scene3.moveEnteriesAcrossRight(matrixC_scene2, move_entry_pos)
-                    total_animations.extend(move_animations)
+                    move_animations, fade_out_animations = scene3.moveEnteriesAcrossRight(matrixC_scene2, move_entry_pos)
+                    total_move_animations.extend(move_animations)
+                    total_fade_out_animations.extend(fade_out_animations)
                     
                 elif col == MATRIX_ROW_COL_CT - 1:
-                    print(f"Move entries {move_entry_pos} to the left")
-                    move_animations = scene3.moveEnteriesAcrossLeft(matrixC_scene2, move_entry_pos)
-                    total_animations.extend(move_animations)
+                    move_animations, fade_out_animations = scene3.moveEnteriesAcrossLeft(matrixC_scene2, move_entry_pos)
+                    total_move_animations.extend(move_animations)
+                    total_fade_out_animations.extend(fade_out_animations)
                     
                 else:
-                    print(f"Move entries {move_entry_pos} to the right and left")
-                    move_animations = scene3.moveEnteriesAcrossRightAndLeft(matrixC_scene2, move_entry_pos, col)
-                    total_animations.extend(move_animations)
-                
-            self.play(*total_animations)
-            print(scene3.moved_aij_values)
+                    move_animations, fade_out_animations = scene3.moveEnteriesAcrossRightAndLeft(matrixC_scene2, move_entry_pos, col)
+                    total_move_animations.extend(move_animations)
+                    total_fade_out_animations.extend(fade_out_animations)
+
+            self.play(*total_move_animations)
+            self.wait(1)
+            
+            transform_animations, move_animations = scene3.updateComputedCValues(matrixC_scene2)
+            
+            self.play(*transform_animations)
+            self.wait(1)
+            self.play(*move_animations, 
+                      *total_fade_out_animations, runtime=5)
+            self.wait(1)
             
             shift_count += 1
             

@@ -111,11 +111,20 @@ class Intial:
         
         return target_position
     
-    def retunMatrixAsArray(self, matrix, vgroup):
+    def retunMatrixAs2dArray(self, matrix, vgroup):
         matrix_list = []
         for entry in range(MATRIX_ROW_COL_CT**2):
             matrix_list.append(matrix[entry][vgroup].get_text())
         
         np_matrix_array = np.array(matrix_list).reshape(MATRIX_ROW_COL_CT, MATRIX_ROW_COL_CT)
+        
+        return np_matrix_array
+
+    def returnComputedCAsArray(self):
+        matrix_list = []
+        for entry in range(MATRIX_ROW_COL_CT**2):
+            matrix_list.append(0)
+        
+        np_matrix_array = np.array(matrix_list)
         
         return np_matrix_array

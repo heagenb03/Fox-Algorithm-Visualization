@@ -19,7 +19,7 @@ for entry in range(MATRIX_ROW_COL_CT**2): #Increment values from 1 to x
 
 #Matrix B intialization
 
-MATRIX_B_COLOR = YELLOW
+MATRIX_B_COLOR = BLACK
 #MATRIX_B_NUMBERS = [9, 8, 7, 6, 5, 4, 3, 2, 1] #Self set values
 
 #OR
@@ -29,12 +29,12 @@ for entry in range(MATRIX_ROW_COL_CT**2, 0, -1): #Decrement values from x to 1
    MATRIX_B_NUMBERS.append(entry)
 
 
-#C values intialization
-C_VALUES_COLOR = BLACK
+#Computed Cij values intialization
+C_VALUES_COLOR = YELLOW
 
 #DON"T EDIT
 MATRIX_BUFFER = MATRIX_ROW_COL_CT / 36
-MATRIX_FONT_SIZE = MATRIX_ROW_COL_CT * 8
+MATRIX_FONT_SIZE = MATRIX_ROW_COL_CT * 7.8
 
 MATRIX_C_BOX_VGROUP = 0
 MATRIX_C_ENTRY_A_VGROUP = 1
