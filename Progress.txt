@@ -16,3 +16,4 @@
 10/22: Make progress on the movement of Aij rows - experiment and work on integrating NumPy arrays to the matrices - Aij values that shift across the row towards the right now move when needed
 10/23: Finish the movemeant of Aij rows - work on updating the computed C values
 10/24: Work on updating the computed C values
+10/25: Computed C values now compute correctly for movment of Aij - Start work on movement and computation with movement of Bij values

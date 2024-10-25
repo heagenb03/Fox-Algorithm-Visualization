@@ -80,6 +80,11 @@ class Fox(Scene):
             scene3.moved_aij_values = []
             scene3.temp_computed_c_values = []
             
+            if shift_count != 0:
+                move_animations = scene3.moveBvalues(matrixC_scene2)
+                self.play(*move_animations)
+                self.wait(1)
+            
             for row in range(MATRIX_ROW_COL_CT):
                 col = shift_count + row
                 
@@ -105,12 +110,14 @@ class Fox(Scene):
             self.play(*total_move_animations)
             self.wait(1)
             
-            transform_animations, move_animations = scene3.updateComputedCValues(matrixC_scene2)
+            transform_animations, fade_in_animations, fade_out_animations = scene3.updateComputedCValues(matrixC_scene2)
+            total_fade_out_animations.extend(fade_out_animations)
             
+            self.play(*fade_in_animations)
+            self.wait(1)
             self.play(*transform_animations)
             self.wait(1)
-            self.play(*move_animations, 
-                      *total_fade_out_animations, runtime=5)
+            self.play(*total_fade_out_animations, runtime=5)
             self.wait(1)
             
             shift_count += 1

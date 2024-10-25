@@ -126,5 +126,6 @@ class Intial:
             matrix_list.append(0)
         
         np_matrix_array = np.array(matrix_list)
+        np_matrix_array.reshape(1, MATRIX_ROW_COL_CT**2)
         
         return np_matrix_array
