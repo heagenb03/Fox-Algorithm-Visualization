@@ -18,7 +18,7 @@ class Intial:
                 height=1,
                 width=1,
                 fill_color=MATRIX_BG_COLOR,
-                fill_opacity=0.7,
+                fill_opacity=0.8,
                 stroke_color=MATRIX_BORDER_COLOR
             )
         

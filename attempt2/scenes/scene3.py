@@ -8,13 +8,14 @@ class Scene3:
         self.intial = Intial()
         self.LEFT_ALINGMENT = 1.5
         self.DOWN_ALINGMENT = 0.3
-        self.moved_aij_values = np.array([])
+        self.moved_aij_values = []
         self.computed_c_values = self.intial.returnComputedCAsArray()
         self.temp_computed_c_values = self.intial.returnComputedCAsArray()
-        self.entry_b_values = np.array([MATRIX_B_NUMBERS])
+        self.entry_b_values = MATRIX_B_NUMBERS.copy()
     
     def moveBvalues(self, matrix):
         move_animations = []
+        temp_b_values = self.entry_b_values.copy()
         
         for row in range(MATRIX_ROW_COL_CT):
             #First Row
@@ -23,10 +24,11 @@ class Scene3:
                     intial_entry = col
                     final_point_entry = col + (MATRIX_ROW_COL_CT * 2)
                     
-                    arcPath = ArcBetweenPoints(matrix[intial_entry][2].get_center(), matrix[final_point_entry][2].get_center() + ORIGIN, angle=PI/2)
+                    arcPath = ArcBetweenPoints(matrix[intial_entry][2].get_center(), matrix[final_point_entry][2].get_center(), angle=PI/2)
                     move_animations.append(MoveAlongPath(matrix[intial_entry][2], arcPath))
                     
-                    self.entry_b_values.append(int(matrix[intial_entry][MATRIX_C_ENTRY_B_VGROUP].get_text()))
+                    self.entry_b_values.insert(final_point_entry, temp_b_values[intial_entry])
+                    self.entry_b_values.pop(final_point_entry + 1)
                     
             #Middle Rows & Final Row
             else:
@@ -34,11 +36,12 @@ class Scene3:
                     intial_entry = (col + (row * MATRIX_ROW_COL_CT))
                     final_point_entry = col + ((row - 1) * MATRIX_ROW_COL_CT)
                     
-                    arcPath = ArcBetweenPoints(matrix[intial_entry][2].get_center(), matrix[final_point_entry][2].get_center() + ORIGIN, angle=PI/2)
+                    arcPath = ArcBetweenPoints(matrix[intial_entry][2].get_center(), matrix[final_point_entry][2].get_center(), angle=PI/2)
                     move_animations.append(MoveAlongPath(matrix[intial_entry][2], arcPath))
                     
-                    self.entry_b_values.append(int(matrix[intial_entry][MATRIX_C_ENTRY_B_VGROUP].get_text()))
-        
+                    self.entry_b_values.insert(final_point_entry, temp_b_values[intial_entry])
+                    self.entry_b_values.pop(final_point_entry + 1)
+    
         return move_animations
     
     def moveEnteriesAcrossRight(self, matrix, entry):
@@ -127,20 +130,21 @@ class Scene3:
         return move_animations, fade_out_animations
     
     def updateComputedCValues(self, matrix):
-        self.temp_computed_c_values = self.moved_aij_values * self.entry_b_values
+        self.temp_computed_c_values = np.array(self.moved_aij_values) * np.array(self.entry_b_values)
         self.computed_c_values += self.temp_computed_c_values
+        
+        alingment = DOWN * 0.28 + RIGHT * 0.23
         
         transform_animations = []
         fade_in_animations = []
         fade_out_animations = []
         for entry in range(MATRIX_ROW_COL_CT**2):
             c_value = Text(str(self.computed_c_values[entry]), font_size=MATRIX_FONT_SIZE, color=C_VALUES_COLOR, fill_opacity=MATRIX_TEXT_OPACITY)
-            c_value.align_to(self.intial.getTargetPosition(matrix, entry, MATRIX_C_ENTRY_COMPUTED_C_VGROUP), DR).shift(DOWN * 0.11 + RIGHT * 0.1)
             
             multi_sign = MathTex("\\times", color=MATRIX_A_COLOR).scale(0.65)
             multi_sign.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], ORIGIN)
             
-            transform_animations.append(Transform(matrix[entry][MATRIX_C_ENTRY_COMPUTED_C_VGROUP], c_value))
+            transform_animations.append(Transform(matrix[entry][MATRIX_C_ENTRY_COMPUTED_C_VGROUP], c_value.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], ORIGIN).shift(alingment)))
             
             fade_in_animations.append(FadeIn(multi_sign, shift=DOWN))
             

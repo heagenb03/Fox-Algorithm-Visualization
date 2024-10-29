@@ -1,4 +1,4 @@
-from manim import WHITE, YELLOW, BLACK, RED_E
+from manim import WHITE, YELLOW, BLACK, ORANGE, RED_E
 
 #Matrix default intialization:
 MATRIX_ROW_COL_CT = 3
@@ -19,18 +19,18 @@ for entry in range(MATRIX_ROW_COL_CT**2): #Increment values from 1 to x
 
 #Matrix B intialization
 
-MATRIX_B_COLOR = BLACK
+MATRIX_B_COLOR = YELLOW
 #MATRIX_B_NUMBERS = [9, 8, 7, 6, 5, 4, 3, 2, 1] #Self set values
 
 #OR
 
 MATRIX_B_NUMBERS = []
 for entry in range(MATRIX_ROW_COL_CT**2, 0, -1): #Decrement values from x to 1
-   MATRIX_B_NUMBERS.append(entry)
+    MATRIX_B_NUMBERS.append(entry)
 
 
 #Computed Cij values intialization
-C_VALUES_COLOR = YELLOW
+C_VALUES_COLOR = BLACK
 
 #DON"T EDIT
 MATRIX_BUFFER = MATRIX_ROW_COL_CT / 36

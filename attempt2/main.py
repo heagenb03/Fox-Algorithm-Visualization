@@ -1,4 +1,5 @@
 from manim import VGroup, Scene, FadeIn, FadeOut, MathTex, RendererType, Text, RIGHT, LEFT, ORIGIN
+import numpy as np
 import sys
 sys.path.insert(0, 'scenes')
 
@@ -57,7 +58,7 @@ class Fox(Scene):
         matrixC_scene2 = scene2.createMatrixC()
         
         self.play(FadeOut(matrices),
-                  FadeIn(matrixC_scene2.shift(RIGHT * scene2.RIGHT_ALINGMENT))
+                  FadeIn(matrixC_scene2.shift(RIGHT * scene2.RIGHT_ALINGMENT).add_to_back)
         )
         self.wait(0.5)
         
@@ -69,19 +70,18 @@ class Fox(Scene):
         """
         Scene 3
             1. 
-        """        
-        matrixC_entryA_array = intial.retunMatrixAs2dArray(matrixC_scene2, MATRIX_C_ENTRY_A_VGROUP)
-        matrixC_entryB_array = intial.retunMatrixAs2dArray(matrixC_scene2, MATRIX_C_ENTRY_B_VGROUP)
-        
+        """                
         shift_count = 0
         while shift_count < MATRIX_ROW_COL_CT:
             total_move_animations = []
             total_fade_out_animations = []
-            scene3.moved_aij_values = []
-            scene3.temp_computed_c_values = []
             
             if shift_count != 0:
+                scene3.moved_aij_values = []
+                scene3.temp_computed_c_values = []
+                
                 move_animations = scene3.moveBvalues(matrixC_scene2)
+                
                 self.play(*move_animations)
                 self.wait(1)
             
