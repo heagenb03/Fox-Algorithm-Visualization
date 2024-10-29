@@ -58,7 +58,7 @@ class Fox(Scene):
         matrixC_scene2 = scene2.createMatrixC()
         
         self.play(FadeOut(matrices),
-                  FadeIn(matrixC_scene2.shift(RIGHT * scene2.RIGHT_ALINGMENT).add_to_back)
+                  FadeIn(matrixC_scene2.shift(RIGHT * scene2.RIGHT_ALINGMENT))
         )
         self.wait(0.5)
         
@@ -69,13 +69,17 @@ class Fox(Scene):
         
         """
         Scene 3
-            1. 
-        """                
+            1. Move Bij values up/down one row 
+            2. Move Aij values to the right/left
+            3. Update Cij values after movement of Bij and Aij values
+        """         
+        
         shift_count = 0
         while shift_count < MATRIX_ROW_COL_CT:
             total_move_animations = []
             total_fade_out_animations = []
             
+            #1
             if shift_count != 0:
                 scene3.moved_aij_values = []
                 scene3.temp_computed_c_values = []
@@ -85,6 +89,7 @@ class Fox(Scene):
                 self.play(*move_animations)
                 self.wait(1)
             
+            #2
             for row in range(MATRIX_ROW_COL_CT):
                 col = shift_count + row
                 
@@ -110,16 +115,15 @@ class Fox(Scene):
             self.play(*total_move_animations)
             self.wait(1)
             
+            #3
             transform_animations, fade_in_animations, fade_out_animations = scene3.updateComputedCValues(matrixC_scene2)
             total_fade_out_animations.extend(fade_out_animations)
             
             self.play(*fade_in_animations)
             self.wait(1)
             self.play(*transform_animations)
-            self.wait(1)
+            self.wait(2)
             self.play(*total_fade_out_animations, runtime=5)
-            self.wait(1)
+            self.wait(2)
             
             shift_count += 1
-            
-        

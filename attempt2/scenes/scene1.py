@@ -14,7 +14,7 @@ class Scene1:
         """
         box_list = []
         matrix = VGroup()
-         
+    
         for entry in range(MATRIX_ROW_COL_CT**2):
             box_list.append(self.intial.createMatrixEntry(MATRIX_A_NUMBERS[entry], MATRIX_A_COLOR))
         

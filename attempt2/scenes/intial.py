@@ -80,7 +80,7 @@ class Intial:
         third_entry.align_to(matrix_box).shift(UP * self.VERT_ALINGMENT + RIGHT * self.HORIZONTAL_ALINGMENT)
         fourth_entry.align_to(matrix_box, DR).shift(UP * self.VERT_ALINGMENT + LEFT * self.HORIZONTAL_ALINGMENT)
         
-        result.add(matrix_box, first_entry, second_entry, third_entry, fourth_entry)
+        result.add(matrix_box.set_z_index(0), first_entry.set_z_index(1), second_entry.set_z_index(1), third_entry.set_z_index(1), fourth_entry.set_z_index(1))
         return result
     
     def getTargetPosition(self, matrix, index, vgroup):
@@ -92,7 +92,7 @@ class Intial:
             vgroup (int): Which entry in the box is being moved 
 
         Returns:
-            _type_: _description_
+            Manim Direction: Target position for the entry
         """
         box_center = matrix[index].get_center()
         
@@ -110,17 +110,13 @@ class Intial:
         target_position = offset + box_center + ORIGIN
         
         return target_position
-    
-    def retunMatrixAs2dArray(self, matrix, vgroup):
-        matrix_list = []
-        for entry in range(MATRIX_ROW_COL_CT**2):
-            matrix_list.append(matrix[entry][vgroup].get_text())
-        
-        np_matrix_array = np.array(matrix_list).reshape(MATRIX_ROW_COL_CT, MATRIX_ROW_COL_CT)
-        
-        return np_matrix_array
 
     def returnComputedCAsArray(self):
+        """Return list of 0 values as a numpy array
+
+        Returns:
+            NumPy Array: Array of 0 values
+        """
         matrix_list = []
         for entry in range(MATRIX_ROW_COL_CT**2):
             matrix_list.append(0)

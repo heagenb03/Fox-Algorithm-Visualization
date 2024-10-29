@@ -5,7 +5,6 @@ from intial import *
 class Scene2:
     def __init__(self):
         self.intial = Intial()
-        self.LEFT_ALINGMENT = 1.5
         self.RIGHT_ALINGMENT = 3.6
         
     def createMatrixC(self):
@@ -34,27 +33,27 @@ class Scene2:
         Returns:
             list: list of animations that move each VGroup part of Matrix C to the center of the screen
         """
+        alingmnet = LEFT * 1.5
         move_animations = []
-        
         for entry in range((MATRIX_ROW_COL_CT**2)):
             #Matrix C
             boxes = matrixC[entry][MATRIX_C_BOX_VGROUP]
-            move_animations.append(boxes.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_BOX_VGROUP) + LEFT * self.LEFT_ALINGMENT))
+            move_animations.append(boxes.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_BOX_VGROUP) + alingmnet))
             
             #Enteries A
             numbers = matrixC[entry][MATRIX_C_ENTRY_A_VGROUP]
-            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_ENTRY_A_VGROUP) + LEFT * self.LEFT_ALINGMENT))   
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_ENTRY_A_VGROUP) + alingmnet))   
                 
             #Enteries B
             numbers = matrixC[entry][MATRIX_C_ENTRY_B_VGROUP]
-            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_ENTRY_B_VGROUP) + LEFT * self.LEFT_ALINGMENT))
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_ENTRY_B_VGROUP) + alingmnet))
             
             #Enteries for moved Aij values
             numbers = matrixC[entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP]
-            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_ENTRY_AIJ_MOVED_VGROUP) + LEFT * self.LEFT_ALINGMENT))
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_ENTRY_AIJ_MOVED_VGROUP) + alingmnet))
             
             #Enteries for computed C values
             numbers = matrixC[entry][MATRIX_C_ENTRY_COMPUTED_C_VGROUP]
-            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_ENTRY_COMPUTED_C_VGROUP) + LEFT * self.LEFT_ALINGMENT))
+            move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixB, entry, MATRIX_C_ENTRY_COMPUTED_C_VGROUP) + alingmnet))
             
         return move_animations

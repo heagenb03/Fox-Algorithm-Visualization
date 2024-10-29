@@ -6,14 +6,20 @@ from intial import *
 class Scene3:
     def __init__(self):
         self.intial = Intial()
-        self.LEFT_ALINGMENT = 1.5
-        self.DOWN_ALINGMENT = 0.3
         self.moved_aij_values = []
+        self.temp_computed_c_values = []
         self.computed_c_values = self.intial.returnComputedCAsArray()
-        self.temp_computed_c_values = self.intial.returnComputedCAsArray()
         self.entry_b_values = MATRIX_B_NUMBERS.copy()
     
     def moveBvalues(self, matrix):
+        """Move Bij values up/down based on the row
+
+        Args:
+            matrix (VGroup): Matrix used in the scene
+
+        Return:
+            list: List of animations that move the Bij values up/down
+        """
         move_animations = []
         temp_b_values = self.entry_b_values.copy()
         
@@ -22,7 +28,7 @@ class Scene3:
             if row == 0:
                 for col in range(MATRIX_ROW_COL_CT):
                     intial_entry = col
-                    final_point_entry = col + (MATRIX_ROW_COL_CT * 2)
+                    final_point_entry = col + (MATRIX_ROW_COL_CT * (MATRIX_ROW_COL_CT - 1))
                     
                     arcPath = ArcBetweenPoints(matrix[intial_entry][2].get_center(), matrix[final_point_entry][2].get_center(), angle=PI/2)
                     move_animations.append(MoveAlongPath(matrix[intial_entry][2], arcPath))
@@ -30,7 +36,7 @@ class Scene3:
                     self.entry_b_values.insert(final_point_entry, temp_b_values[intial_entry])
                     self.entry_b_values.pop(final_point_entry + 1)
                     
-            #Middle Rows & Final Row
+            #Rest of the Rows
             else:
                 for col in range(MATRIX_ROW_COL_CT):
                     intial_entry = (col + (row * MATRIX_ROW_COL_CT))
@@ -45,6 +51,15 @@ class Scene3:
         return move_animations
     
     def moveEnteriesAcrossRight(self, matrix, entry):
+        """Move All Aij values to the right
+
+        Args:
+            matrix (VGroup): Matrix used in the scene
+            entry (int): index of the entry in the matrix
+
+        Returns:
+            list: List of animations that move the Aij values to the right, list of animations that fade out the temporary Aij values that moved
+        """
         move_animations = []
         fade_out_animations = []
         temp_moved_aij_values = []
@@ -68,6 +83,15 @@ class Scene3:
         return move_animations, fade_out_animations
     
     def moveEnteriesAcrossLeft(self, matrix, entry):
+        """Move All Aij values to the left
+
+        Args:
+            matrix (VGroup): Matrix used in the scene
+            entry (int): index of the entry in the matrix
+
+        Returns:
+            list: List of animations that move the Aij values to the left, list of animations that fade out the temporary Aij values that moved
+        """
         move_animations = []
         fade_out_animations = []
         temp_moved_aij_values = []
@@ -91,6 +115,15 @@ class Scene3:
         return move_animations, fade_out_animations
     
     def moveEnteriesAcrossRightAndLeft(self, matrix, entry, row):
+        """Move All Aij values to the righ and left based on its position
+
+        Args:
+            matrix (VGroup): Matrix used in the scene
+            entry (int): index of the entry in the matrix
+
+        Returns:
+            list: List of animations that move the Aij values to the right/left, list of animations that fade out the temporary Aij values that moved
+        """
         move_animations = []
         fade_out_animations = []
         temp_moved_aij_values = []
@@ -130,6 +163,14 @@ class Scene3:
         return move_animations, fade_out_animations
     
     def updateComputedCValues(self, matrix):
+        """Compute Cij values by multiplying Aij and Bij values and adding them to the computed C values; update the matrix with the new values
+
+        Args:
+            matrix (VGroup): Matrix used in the scene
+
+        Returns:
+            list: List of animations that update the matrix with the new Cij values, list of animations that fade in the multi sign, list of animations that fade out the multi sign
+        """
         self.temp_computed_c_values = np.array(self.moved_aij_values) * np.array(self.entry_b_values)
         self.computed_c_values += self.temp_computed_c_values
         

@@ -14,8 +14,8 @@ MATRIX_A_COLOR = WHITE
 #OR
 
 MATRIX_A_NUMBERS = []
-for entry in range(MATRIX_ROW_COL_CT**2): #Increment values from 1 to x
-    MATRIX_A_NUMBERS.append(entry + 1)
+for entry in range(1, MATRIX_ROW_COL_CT**2 + 1): #Increment values from 1 to x
+    MATRIX_A_NUMBERS.append(entry)
 
 #Matrix B intialization
 
@@ -34,7 +34,7 @@ C_VALUES_COLOR = BLACK
 
 #DON"T EDIT
 MATRIX_BUFFER = MATRIX_ROW_COL_CT / 36
-MATRIX_FONT_SIZE = MATRIX_ROW_COL_CT * 7.8
+MATRIX_FONT_SIZE = -MATRIX_ROW_COL_CT + 26.4
 
 MATRIX_C_BOX_VGROUP = 0
 MATRIX_C_ENTRY_A_VGROUP = 1
