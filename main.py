@@ -14,11 +14,10 @@ class Fox(Scene):
         """
         Scene 1 
             #1. Create Matrix A, B, C
-            #2. Move Aij & Bij values to corresponding Cij
+            #2. Move Aij & Bij values to corresponding Cij values / Fadeout Matrix A & B
         """
         
         #1
-        intial = Intial()
         scene1 = Scene1()
         scene2 = Scene2()
         scene3 = Scene3()
@@ -41,31 +40,41 @@ class Fox(Scene):
         matrices.move_to(ORIGIN)
         
         self.play(FadeIn(matrices))
-        self.wait(1)
+        self.wait(5)
         
         #2
         move_animations = scene1.moveEnteriesToMatrixC(matrixA_scene1, matrixB_scene1, matrixC_scene1)
         self.play(*move_animations)
         self.wait(0.5)
         
+        partial_matrixC_scene = scene1.createPartialMatrixC()
+        
+        self.play(FadeOut(matrices),
+                FadeIn(partial_matrixC_scene.shift(RIGHT * scene1.RIGHT_ALINGMENT))
+        )
+        self.wait(0.5)
+        
         """
         Scene 2 
-            1. Remove Matrix A, B
-            2. Move Matrix C to center
+            1. Move Matrix C to center
+            2. Realign Matrix C for future animation purposes
         """
         
         #1
         matrixC_scene2 = scene2.createMatrixC()
-        
-        self.play(FadeOut(matrices),
-                  FadeIn(matrixC_scene2.shift(RIGHT * scene2.RIGHT_ALINGMENT))
+
+
+        move_animations = scene2.moveMatrixCtoCenter(matrixB_scene1, partial_matrixC_scene)
+        self.play(*move_animations)
+        self.play(FadeOut(partial_matrixC_scene),
+                FadeIn(matrixC_scene2.shift(RIGHT * scene2.RIGHT_ALINGMENT))
         )
-        self.wait(0.5)
         
         #2
-        move_animations = scene2.moveMatrixCtoCenter(matrixB_scene1, matrixC_scene2)
-        self.play(*move_animations)
-        self.wait(0.5)
+        adjust_animations = scene2.realignMatrixC(matrixC_scene2)
+        self.play(*adjust_animations)
+        
+        self.wait(1)
         
         """
         Scene 3
@@ -97,6 +106,11 @@ class Fox(Scene):
                     col = abs(MATRIX_ROW_COL_CT - col)
                     
                 move_entry_pos = (row * MATRIX_ROW_COL_CT) + col
+                
+                move_animations, fade_out_animations = scene3.moveEnteriesToOwnBox(matrixC_scene2, move_entry_pos)
+                total_move_animations.extend(move_animations)
+                total_fade_out_animations.extend(fade_out_animations)
+                
                 if col == 0:
                     move_animations, fade_out_animations = scene3.moveEnteriesAcrossRight(matrixC_scene2, move_entry_pos)
                     total_move_animations.extend(move_animations)
@@ -116,10 +130,15 @@ class Fox(Scene):
             self.wait(1)
             
             #3
-            transform_animations, fade_in_animations, fade_out_animations = scene3.updateComputedCValues(matrixC_scene2)
-            total_fade_out_animations.extend(fade_out_animations)
+            move_animations, transform_animations, intial_fade_in_animations, final_fade_in_animations, intial_fade_out_animations, final_fade_out_animations = scene3.updateComputedCValues(matrixC_scene2)
+            total_fade_out_animations.extend(final_fade_out_animations)
             
-            self.play(*fade_in_animations)
+            self.play(*intial_fade_in_animations)
+            self.wait(1)
+            self.play(*move_animations)
+            self.wait(0.5)
+            self.play(*intial_fade_out_animations,
+                    *final_fade_in_animations)
             self.wait(1)
             self.play(*transform_animations)
             self.wait(2)
@@ -127,3 +146,8 @@ class Fox(Scene):
             self.wait(2)
             
             shift_count += 1
+        
+        """
+        Scene 4
+            1.
+        """

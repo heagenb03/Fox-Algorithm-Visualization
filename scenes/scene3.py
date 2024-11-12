@@ -50,6 +50,20 @@ class Scene3:
     
         return move_animations
     
+    def moveEnteriesToOwnBox(self, matrix, entry):
+        move_animations = []
+        fade_out_animations = []
+        temp_moved_aij_values = []
+        
+        temp_moved_aij_values.append(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].copy())
+        
+        arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
+        move_animations.append(MoveAlongPath(temp_moved_aij_values[0], arcPath))
+
+        fade_out_animations.append(FadeOut(temp_moved_aij_values[0]))
+        
+        return move_animations, fade_out_animations
+        
     def moveEnteriesAcrossRight(self, matrix, entry):
         """Move All Aij values to the right
 
@@ -72,7 +86,7 @@ class Scene3:
             arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
             move_animations.append(MoveAlongPath(temp_moved_aij_values[count], arcPath))
             
-            fade_out_animations.append(FadeOut(temp_moved_aij_values[count], shift=UP))
+            fade_out_animations.append(FadeOut(temp_moved_aij_values[count]))
             
             self.moved_aij_values.append(int(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_text()))
 
@@ -104,7 +118,7 @@ class Scene3:
             arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
             move_animations.append(MoveAlongPath(temp_moved_aij_values[count], arcPath))
             
-            fade_out_animations.append(FadeOut(temp_moved_aij_values[count], shift=UP))
+            fade_out_animations.append(FadeOut(temp_moved_aij_values[count]))
             
             self.moved_aij_values.append(int(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_text()))
 
@@ -139,7 +153,7 @@ class Scene3:
             arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
             move_animations.append(MoveAlongPath(temp_moved_aij_values[count], arcPath))
             
-            fade_out_animations.append(FadeOut(temp_moved_aij_values[count], shift=UP))
+            fade_out_animations.append(FadeOut(temp_moved_aij_values[count]))
             
             self.moved_aij_values.append(int(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_text()))
 
@@ -152,7 +166,7 @@ class Scene3:
             arcPath = ArcBetweenPoints(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP].get_center(), angle=PI/2)
             move_animations.append(MoveAlongPath(temp_moved_aij_values[count], arcPath))
         
-            fade_out_animations.append(FadeOut(temp_moved_aij_values[count], shift=UP))
+            fade_out_animations.append(FadeOut(temp_moved_aij_values[count]))
         
             self.moved_aij_values.append(int(matrix[entry][MATRIX_C_ENTRY_A_VGROUP].get_text()))
 
@@ -176,19 +190,37 @@ class Scene3:
         
         alingment = DOWN * 0.28 + RIGHT * 0.23
         
+        move_animations = []
         transform_animations = []
-        fade_in_animations = []
-        fade_out_animations = []
+        intial_fade_in_animations = []
+        final_fade_in_animations = []
+        intial_fade_out_animations = []
+        final_fade_out_animations = []
         for entry in range(MATRIX_ROW_COL_CT**2):
             c_value = Text(str(self.computed_c_values[entry]), font_size=MATRIX_FONT_SIZE, color=C_VALUES_COLOR, fill_opacity=MATRIX_TEXT_OPACITY)
+            c_value_copy = c_value.copy()
+            moved_aij_value = Text(str(self.moved_aij_values[entry]), font_size=MATRIX_FONT_SIZE, color=MATRIX_A_COLOR, fill_opacity=MATRIX_TEXT_OPACITY)
+            bij_value = Text(str(self.entry_b_values[entry]), font_size=MATRIX_FONT_SIZE, color=MATRIX_B_COLOR, fill_opacity=MATRIX_TEXT_OPACITY)
+            
+            moved_aij_value.align_to(matrix[entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP], DL)
+            bij_value.align_to(matrix[entry][MATRIX_C_ENTRY_B_VGROUP], UR)
             
             multi_sign = MathTex("\\times", color=MATRIX_A_COLOR).scale(0.65)
             multi_sign.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], ORIGIN)
             
+            intial_fade_in_animations.append(FadeIn(multi_sign))
+            
+            move_animations.append(moved_aij_value.animate.move_to(multi_sign.get_center()))
+            move_animations.append(bij_value.animate.move_to(multi_sign.get_center()))
+            
+            final_fade_in_animations.append(FadeIn(c_value_copy.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], ORIGIN)))
+            
             transform_animations.append(Transform(matrix[entry][MATRIX_C_ENTRY_COMPUTED_C_VGROUP], c_value.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], ORIGIN).shift(alingment)))
             
-            fade_in_animations.append(FadeIn(multi_sign, shift=DOWN))
+            intial_fade_out_animations.append(FadeOut(multi_sign))
+            intial_fade_out_animations.append(FadeOut(moved_aij_value))
+            intial_fade_out_animations.append(FadeOut(bij_value))
             
-            fade_out_animations.append(FadeOut(multi_sign, shift=UP))
+            final_fade_out_animations.append(FadeOut(c_value_copy))
 
-        return transform_animations, fade_in_animations, fade_out_animations
+        return move_animations, transform_animations, intial_fade_in_animations, final_fade_in_animations, intial_fade_out_animations, final_fade_out_animations

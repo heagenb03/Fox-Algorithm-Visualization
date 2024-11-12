@@ -83,6 +83,19 @@ class Intial:
         result.add(matrix_box.set_z_index(0), first_entry.set_z_index(1), second_entry.set_z_index(1), third_entry.set_z_index(1), fourth_entry.set_z_index(1))
         return result
     
+    def createMatrixTwoEntries(self, first_num, second_num, first_txt_color, second_txt_color):
+        result = VGroup()
+        matrix_box = self.createMatrixBox()
+        
+        first_entry = Text(str(first_num), font_size=MATRIX_FONT_SIZE, color=first_txt_color, fill_opacity=MATRIX_TEXT_OPACITY)
+        second_entry = Text(str(second_num), font_size=MATRIX_FONT_SIZE, color=second_txt_color, fill_opacity=MATRIX_TEXT_OPACITY)
+        
+        first_entry.align_to(matrix_box, UL).shift(DOWN * self.VERT_ALINGMENT + RIGHT * self.HORIZONTAL_ALINGMENT)
+        second_entry.align_to(matrix_box, UR).shift(DOWN * self.VERT_ALINGMENT + LEFT * self.HORIZONTAL_ALINGMENT)
+        
+        result.add(matrix_box.set_z_index(0), first_entry.set_z_index(1), second_entry.set_z_index(1))
+        return result
+        
     def getTargetPosition(self, matrix, index, vgroup):
         """Gets target position for each entry to corresponding position in each box in each matrix
 

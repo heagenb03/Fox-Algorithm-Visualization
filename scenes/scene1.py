@@ -5,6 +5,7 @@ from intial import Intial
 class Scene1:
     def __init__(self):
         self.intial = Intial()
+        self.RIGHT_ALINGMENT = 3.6
     
     def createMatrixA(self):
         """Create Matrix A
@@ -78,3 +79,14 @@ class Scene1:
             move_animations.append(numbers.animate.move_to(self.intial.getTargetPosition(matrixC, entry, vgroup + 1))) 
         
         return move_animations
+    
+    def createPartialMatrixC(self):
+        box_list = []
+        matrix = VGroup()
+        
+        for box in range(MATRIX_ROW_COL_CT**2):
+            box_list.append(self.intial.createMatrixTwoEntries(MATRIX_A_NUMBERS[box], MATRIX_B_NUMBERS[box], MATRIX_A_COLOR, MATRIX_B_COLOR))
+            
+        matrix.add(*box_list)
+        matrix.arrange_in_grid(rows=MATRIX_ROW_COL_CT, cols=MATRIX_ROW_COL_CT, buff=MATRIX_BUFFER)
+        return matrix
