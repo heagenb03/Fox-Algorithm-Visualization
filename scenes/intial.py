@@ -53,6 +53,16 @@ class Intial:
         
         return result
 
+    def createMatrixCenterdEntry(self, num, txt_color):
+        result = VGroup()
+        matrix_box = self.createMatrixBox()
+        
+        entry = Text(str(num), font_size=MATRIX_FONT_SIZE, color=txt_color, fill_opacity=MATRIX_TEXT_OPACITY)
+        entry.move_to(matrix_box.get_center())
+        result.add(matrix_box, entry)
+        
+        return result
+    
     def createMatrixFourEntries(self, first_num, second_num, third_num, fourth_num, first_txt_color, second_txt_color, third_txt_color):
         """Create a matrix box with four entries 
 
@@ -66,6 +76,8 @@ class Intial:
         Returns:
             VGroup: VGroup with matrix box and four entries
         """
+        VERT_ALINGMENT = 0.1
+        HORIZONTAL_ALINGMENT = 0.1
         result = VGroup()
         matrix_box = self.createMatrixBox()
         
@@ -74,23 +86,26 @@ class Intial:
         third_entry = Text(str(third_num), font_size=MATRIX_FONT_SIZE, color=MATRIX_BG_COLOR, fill_opacity=0.0) #Hidden value for Aij thats created for positioning
         fourth_entry = Text(str(fourth_num), font_size=MATRIX_FONT_SIZE, color=third_txt_color, fill_opacity=MATRIX_TEXT_OPACITY)
         
-        first_entry.align_to(matrix_box, UL).shift(DOWN * 0.1 + RIGHT * 0.1)
-        second_entry.align_to(matrix_box, UR).shift(DOWN * 0.1 + RIGHT * 0.1)
-        third_entry.align_to(matrix_box).shift(DOWN * 0.1 + RIGHT * 0.1)
-        fourth_entry.align_to(matrix_box, DR).shift(DOWN * 0.1 + RIGHT * 0.1)
+        first_entry.align_to(matrix_box, UL).shift(DOWN * VERT_ALINGMENT + RIGHT * HORIZONTAL_ALINGMENT)
+        second_entry.align_to(matrix_box, UR).shift(DOWN * VERT_ALINGMENT + LEFT * HORIZONTAL_ALINGMENT)
+        third_entry.align_to(matrix_box).shift(UP * VERT_ALINGMENT + RIGHT * HORIZONTAL_ALINGMENT)
+        fourth_entry.align_to(matrix_box, DR).shift(UP * VERT_ALINGMENT + LEFT * HORIZONTAL_ALINGMENT)
         
         result.add(matrix_box.set_z_index(0), first_entry.set_z_index(1), second_entry.set_z_index(1), third_entry.set_z_index(1), fourth_entry.set_z_index(1))
         return result
     
     def createMatrixTwoEntries(self, first_num, second_num, first_txt_color, second_txt_color):
+        VERT_ALINGMENT = 0.1
+        HORIZONTAL_ALINGMENT = 0.1
+        
         result = VGroup()
         matrix_box = self.createMatrixBox()
         
         first_entry = Text(str(first_num), font_size=MATRIX_FONT_SIZE, color=first_txt_color, fill_opacity=MATRIX_TEXT_OPACITY)
         second_entry = Text(str(second_num), font_size=MATRIX_FONT_SIZE, color=second_txt_color, fill_opacity=MATRIX_TEXT_OPACITY)
         
-        first_entry.align_to(matrix_box, UL).shift(DOWN * self.VERT_ALINGMENT + RIGHT * self.HORIZONTAL_ALINGMENT)
-        second_entry.align_to(matrix_box, UR).shift(DOWN * self.VERT_ALINGMENT + LEFT * self.HORIZONTAL_ALINGMENT)
+        first_entry.align_to(matrix_box, UL).shift(DOWN * VERT_ALINGMENT + RIGHT * HORIZONTAL_ALINGMENT)
+        second_entry.align_to(matrix_box, UR).shift(DOWN * VERT_ALINGMENT + LEFT * HORIZONTAL_ALINGMENT)
         
         result.add(matrix_box.set_z_index(0), first_entry.set_z_index(1), second_entry.set_z_index(1))
         return result
