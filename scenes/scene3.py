@@ -1,7 +1,7 @@
-from manim import ArcBetweenPoints, MoveAlongPath, MathTex, FadeOut, FadeIn, PI, RIGHT, DR, UP, Text, Transform
+from manim import ArcBetweenPoints, MoveAlongPath, MathTex, FadeOut, FadeIn, PI, RIGHT, DOWN, DL, UL, ORIGIN, Text, Transform
 import numpy as np
 from constants import *
-from intial import *
+from intial import Intial
 
 class Scene3:
     def __init__(self):
@@ -51,6 +51,15 @@ class Scene3:
         return move_animations
     
     def moveEnteriesToOwnBox(self, matrix, entry):
+        """Move Aij values down to its own box
+
+        Args:
+            matrix (Vgroup): matrix used in scene
+            entry (int): index of the entry in the matrix
+
+        Returns:
+            list: list of animations that move the Aij values to its own box, list of animations that fade out the temporary Aij values that moved
+        """
         move_animations = []
         fade_out_animations = []
         temp_moved_aij_values = []
@@ -183,7 +192,13 @@ class Scene3:
             matrix (VGroup): Matrix used in the scene
 
         Returns:
-            list: List of animations that update the matrix with the new Cij values, list of animations that fade in the multi sign, list of animations that fade out the multi sign
+            list: List of animations that update the Cij values with (past Cij values + new Cij value)
+                    List of animations that move the Aij and Bij values to the center of the box
+                    List of animations that move the Cij value (Aij * Bij) to the computed C value (past Cij values + new Cij value)
+                    List of animations that fade in multiplcation sign
+                    List of animations that fade in the new Cij value (Aij * Bij)
+                    List of animations that fade out the Aij and Bij values
+                    List of animations that fade out the temporary Cij value (Aij * Bij)
         """
         self.temp_computed_c_values = np.array(self.moved_aij_values) * np.array(self.entry_b_values)
         self.computed_c_values += self.temp_computed_c_values

@@ -1,4 +1,4 @@
-from manim import VGroup, np
+from manim import VGroup
 from constants import *
 from intial import Intial
 
@@ -81,6 +81,11 @@ class Scene1:
         return move_animations
     
     def createPartialMatrixC(self):
+        """_summary_
+
+        Returns:
+            Vgroup: Matrix C with only entries Aij & Bij
+        """
         box_list = []
         matrix = VGroup()
         

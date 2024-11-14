@@ -1,6 +1,6 @@
-from manim import VGroup, ORIGIN, LEFT, np
+from manim import VGroup, LEFT
 from constants import *
-from intial import *
+from intial import Intial
 
 class Scene2:
     def __init__(self):
@@ -51,6 +51,14 @@ class Scene2:
         return move_animations
     
     def realignMatrixC(self, matrixC):
+        """Realign Matrix moved aij entry positioning for future animation purposes
+
+        Args:
+            matrixC (VGroup): Matrix C
+
+        Returns:
+            list: list of undisplayed/hidden animations that adjust positioning
+        """
         adjust_animations = []
         for entry in range(MATRIX_ROW_COL_CT**2):
             numbers = matrixC[entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP]

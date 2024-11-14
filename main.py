@@ -1,5 +1,4 @@
-from manim import VGroup, Scene, FadeIn, FadeOut, MathTex, RendererType, Text, RIGHT, LEFT, ORIGIN
-import numpy as np
+from manim import VGroup, Scene, FadeIn, FadeOut, MathTex, RIGHT, LEFT, ORIGIN
 import sys
 sys.path.insert(0, 'scenes')
 
@@ -9,7 +8,6 @@ from scenes.scene1 import Scene1
 from scenes.scene2 import Scene2
 from scenes.scene3 import Scene3
 from scenes.scene4 import Scene4
-
 class Fox(Scene):
     def construct(self):
         scene1 = Scene1()
