@@ -19,3 +19,4 @@
 10/25: Computed C values now compute correctly for movment of Aij - Start work on movement and computation with movement of Bij values
 10/29: Finished!
 11/12: Work on fixing some animations - starting on the rework of the animation of the computation of c values
+11/14: Finish adjustments!
