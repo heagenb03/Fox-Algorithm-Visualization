@@ -5,7 +5,7 @@ from intial import Intial
 class Scene1:
     def __init__(self):
         self.intial = Intial()
-        self.RIGHT_ALINGMENT = 3.6
+        self.RIGHT_ALINGMENT = 3.8
     
     def createMatrixA(self):
         """Create Matrix A
