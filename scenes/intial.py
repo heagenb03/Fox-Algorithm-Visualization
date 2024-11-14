@@ -5,8 +5,7 @@ import numpy as np
 #Intialize functions utilized in the scenes
 class Intial:
     def __init__(self):
-        self.VERT_ALINGMENT = 0.1
-        self.HORIZONTAL_ALINGMENT = 0.1
+        pass
     
     def createMatrixBox(self):
         """Create a the individual "box" within a matrix
@@ -75,10 +74,10 @@ class Intial:
         third_entry = Text(str(third_num), font_size=MATRIX_FONT_SIZE, color=MATRIX_BG_COLOR, fill_opacity=0.0) #Hidden value for Aij thats created for positioning
         fourth_entry = Text(str(fourth_num), font_size=MATRIX_FONT_SIZE, color=third_txt_color, fill_opacity=MATRIX_TEXT_OPACITY)
         
-        first_entry.align_to(matrix_box, UL).shift(DOWN * self.VERT_ALINGMENT + RIGHT * self.HORIZONTAL_ALINGMENT)
-        second_entry.align_to(matrix_box, UR).shift(DOWN * self.VERT_ALINGMENT + LEFT * self.HORIZONTAL_ALINGMENT)
-        third_entry.align_to(matrix_box).shift(UP * self.VERT_ALINGMENT + RIGHT * self.HORIZONTAL_ALINGMENT)
-        fourth_entry.align_to(matrix_box, DR).shift(UP * self.VERT_ALINGMENT + LEFT * self.HORIZONTAL_ALINGMENT)
+        first_entry.align_to(matrix_box, UL).shift(DOWN * 0.1 + RIGHT * 0.1)
+        second_entry.align_to(matrix_box, UR).shift(DOWN * 0.1 + RIGHT * 0.1)
+        third_entry.align_to(matrix_box).shift(DOWN * 0.1 + RIGHT * 0.1)
+        fourth_entry.align_to(matrix_box, DR).shift(DOWN * 0.1 + RIGHT * 0.1)
         
         result.add(matrix_box.set_z_index(0), first_entry.set_z_index(1), second_entry.set_z_index(1), third_entry.set_z_index(1), fourth_entry.set_z_index(1))
         return result
