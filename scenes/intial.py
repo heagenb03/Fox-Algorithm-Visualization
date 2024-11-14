@@ -52,23 +52,13 @@ class Intial:
         result.add(matrix_box, entry)
         
         return result
-
-    def createMatrixCenterdEntry(self, num, txt_color):
-        result = VGroup()
-        matrix_box = self.createMatrixBox()
-        
-        entry = Text(str(num), font_size=MATRIX_FONT_SIZE, color=txt_color, fill_opacity=MATRIX_TEXT_OPACITY)
-        entry.move_to(matrix_box.get_center())
-        result.add(matrix_box, entry)
-        
-        return result
     
     def createMatrixFourEntries(self, first_num, second_num, third_num, fourth_num, first_txt_color, second_txt_color, third_txt_color):
         """Create a matrix box with four entries 
 
         Args:
             first_num (int/float): Aij values from Matrix A
-            second_num (int/float): Bij values from Matrix B
+            second_num (int/float): Bij values from Madtrix B
             third_num (int/float): Temporary values from the moved Aij values
             fourth_num (int/float): Computed Cij values from Aij * Bij
             first_txt_color, second_txt_color, third_text_color (str): according text colors
