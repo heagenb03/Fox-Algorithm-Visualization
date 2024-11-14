@@ -190,30 +190,33 @@ class Scene3:
         
         alingment = DOWN * 0.28 + RIGHT * 0.23
         
-        move_animations = []
         transform_animations = []
+        intial_move_animations = []
+        final_move_animations = []
         intial_fade_in_animations = []
         final_fade_in_animations = []
         intial_fade_out_animations = []
         final_fade_out_animations = []
         for entry in range(MATRIX_ROW_COL_CT**2):
             c_value = Text(str(self.computed_c_values[entry]), font_size=MATRIX_FONT_SIZE, color=C_VALUES_COLOR, fill_opacity=MATRIX_TEXT_OPACITY)
-            c_value_copy = c_value.copy()
+            temp_c_value = Text(str(self.temp_computed_c_values[entry]), font_size=MATRIX_FONT_SIZE, color=C_VALUES_COLOR, fill_opacity=MATRIX_TEXT_OPACITY)
             moved_aij_value = Text(str(self.moved_aij_values[entry]), font_size=MATRIX_FONT_SIZE, color=MATRIX_A_COLOR, fill_opacity=MATRIX_TEXT_OPACITY)
             bij_value = Text(str(self.entry_b_values[entry]), font_size=MATRIX_FONT_SIZE, color=MATRIX_B_COLOR, fill_opacity=MATRIX_TEXT_OPACITY)
             
             moved_aij_value.align_to(matrix[entry][MATRIX_C_ENTRY_AIJ_MOVED_VGROUP], DL)
-            bij_value.align_to(matrix[entry][MATRIX_C_ENTRY_B_VGROUP], UR)
+            bij_value.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], UL).shift(DOWN * 0.6 + RIGHT * 1.1)
             
             multi_sign = MathTex("\\times", color=MATRIX_A_COLOR).scale(0.65)
             multi_sign.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], ORIGIN)
             
             intial_fade_in_animations.append(FadeIn(multi_sign))
             
-            move_animations.append(moved_aij_value.animate.move_to(multi_sign.get_center()))
-            move_animations.append(bij_value.animate.move_to(multi_sign.get_center()))
+            intial_move_animations.append(moved_aij_value.animate.move_to(multi_sign.get_center()))
+            intial_move_animations.append(bij_value.animate.move_to(multi_sign.get_center()))
             
-            final_fade_in_animations.append(FadeIn(c_value_copy.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], ORIGIN)))
+            final_fade_in_animations.append(FadeIn(temp_c_value.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], ORIGIN)))
+            
+            final_move_animations.append(temp_c_value.animate.move_to(matrix[entry][MATRIX_C_ENTRY_COMPUTED_C_VGROUP].get_center()))
             
             transform_animations.append(Transform(matrix[entry][MATRIX_C_ENTRY_COMPUTED_C_VGROUP], c_value.next_to(matrix[entry][MATRIX_C_BOX_VGROUP], ORIGIN).shift(alingment)))
             
@@ -221,6 +224,6 @@ class Scene3:
             intial_fade_out_animations.append(FadeOut(moved_aij_value))
             intial_fade_out_animations.append(FadeOut(bij_value))
             
-            final_fade_out_animations.append(FadeOut(c_value_copy))
+            final_fade_out_animations.append(FadeOut(temp_c_value))
 
-        return move_animations, transform_animations, intial_fade_in_animations, final_fade_in_animations, intial_fade_out_animations, final_fade_out_animations
+        return transform_animations, intial_move_animations, final_move_animations, intial_fade_in_animations, final_fade_in_animations, intial_fade_out_animations, final_fade_out_animations
