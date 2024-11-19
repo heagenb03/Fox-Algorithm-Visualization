@@ -30,8 +30,8 @@ class Scene3:
                     intial_entry = col
                     final_point_entry = col + (MATRIX_ROW_COL_CT * (MATRIX_ROW_COL_CT - 1))
                     
-                    arcPath = ArcBetweenPoints(matrix[intial_entry][2].get_center(), matrix[final_point_entry][2].get_center(), angle=PI/2)
-                    move_animations.append(MoveAlongPath(matrix[intial_entry][2], arcPath))
+                    arcPath = ArcBetweenPoints(matrix[intial_entry][MATRIX_C_ENTRY_B_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_B_VGROUP].get_center(), angle=PI/2)
+                    move_animations.append(MoveAlongPath(matrix[intial_entry][MATRIX_C_ENTRY_B_VGROUP], arcPath))
                     
                     self.entry_b_values.insert(final_point_entry, temp_b_values[intial_entry])
                     self.entry_b_values.pop(final_point_entry + 1)
@@ -42,8 +42,8 @@ class Scene3:
                     intial_entry = (col + (row * MATRIX_ROW_COL_CT))
                     final_point_entry = col + ((row - 1) * MATRIX_ROW_COL_CT)
                     
-                    arcPath = ArcBetweenPoints(matrix[intial_entry][2].get_center(), matrix[final_point_entry][2].get_center(), angle=PI/2)
-                    move_animations.append(MoveAlongPath(matrix[intial_entry][2], arcPath))
+                    arcPath = ArcBetweenPoints(matrix[intial_entry][MATRIX_C_ENTRY_B_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_B_VGROUP].get_center(), angle=PI/2)
+                    move_animations.append(MoveAlongPath(matrix[intial_entry][MATRIX_C_ENTRY_B_VGROUP], arcPath))
                     
                     self.entry_b_values.insert(final_point_entry, temp_b_values[intial_entry])
                     self.entry_b_values.pop(final_point_entry + 1)

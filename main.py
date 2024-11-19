@@ -3,7 +3,6 @@ import sys
 sys.path.insert(0, 'scenes')
 
 from constants import *
-from scenes.intial import Intial
 from scenes.scene1 import Scene1
 from scenes.scene2 import Scene2
 from scenes.scene3 import Scene3

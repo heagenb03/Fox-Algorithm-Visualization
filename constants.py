@@ -1,4 +1,4 @@
-from manim import WHITE, YELLOW, BLACK, ORANGE, RED_E
+from manim import WHITE, YELLOW, BLACK, RED_E
 
 #Matrix default intialization:
 MATRIX_ROW_COL_CT = 3
