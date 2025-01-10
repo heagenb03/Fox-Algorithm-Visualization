@@ -33,7 +33,7 @@ class Scene2:
         Returns:
             list: list of animations that move each VGroup part of Matrix C to the center of the screen
         """
-        alingmnet = LEFT * 1.5
+        alingmnet = LEFT * 1.8
         move_animations = []
         for entry in range(MATRIX_ROW_COL_CT**2):
             #Matrix C
