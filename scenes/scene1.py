@@ -1,4 +1,4 @@
-from manim import VGroup
+from manim import VGroup, Text, UP, RIGHT
 from constants import *
 from intial import Intial
 
@@ -6,6 +6,16 @@ class Scene1:
     def __init__(self):
         self.intial = Intial()
         self.RIGHT_ALINGMENT = 3.8
+    
+    def createTitle(self):
+        """Create Fox's Algorithm title
+
+        Returns:
+            _type_: Manim Text object
+        """
+        text = Text("Fox's Algorithm", color=MATRIX_BG_COLOR).scale(0.75).shift(UP * 2.5)
+        
+        return text
     
     def createMatrixA(self):
         """Create Matrix A

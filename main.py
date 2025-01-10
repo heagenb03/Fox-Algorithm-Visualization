@@ -27,6 +27,7 @@ class Fox(Scene):
         matrixA_scene1 = scene1.createMatrixA()
         matrixB_scene1 = scene1.createMatrixB()
         matrixC_scene1 = scene1.createMatrixC()
+        algorithm_tile = scene1.createTitle()
         
         matrices = VGroup(
             matrixC_scene1,
@@ -38,6 +39,7 @@ class Fox(Scene):
         
         matrices.move_to(ORIGIN)
         
+        self.add(algorithm_tile)
         self.play(FadeIn(matrices))
         self.wait(5)
         
@@ -66,7 +68,7 @@ class Fox(Scene):
         move_animations = scene2.moveMatrixCtoCenter(matrixB_scene1, partial_matrixC_scene)
         self.play(*move_animations)
         self.play(FadeOut(partial_matrixC_scene),
-                FadeIn(matrixC_scene2.shift(RIGHT * scene2.RIGHT_ALINGMENT))
+                FadeIn(matrixC_scene2)
         )
         
         #2
