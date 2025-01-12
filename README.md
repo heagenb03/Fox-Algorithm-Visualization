@@ -4,9 +4,7 @@ A simple animation of the Fox Algorithm for matrix multiplication. Created under
 
 ## Watch
 
-View the animation on [Youtube](https://youtu.be/JIlXMc-9JJw)
-Or
-View the animation in the local [Fox.mp4](https://github.com/heagenb03/Fox-Algorithm-Visualization/blob/main/media/videos/main/1080p60/Fox.mp4) file that updates alongside [main.py](https://github.com/heagenb03/Fox-Algorithm-Visualization/blob/main/main.py)
+View the animation on [Youtube](https://youtu.be/JIlXMc-9JJw) or view the animation in the local [Fox.mp4](https://github.com/heagenb03/Fox-Algorithm-Visualization/blob/main/media/videos/main/1080p60/Fox.mp4) file that updates alongside [main.py](https://github.com/heagenb03/Fox-Algorithm-Visualization/blob/main/main.py)
 
 ## Executing the Program
 
